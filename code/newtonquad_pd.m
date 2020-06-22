@@ -14,7 +14,7 @@ p = size(Aeq,1);
 
 % Define Matrices for KKT-equality M_kkt*deltar = b_kkt
 M_kkt =  [Q                        Aineq'                  Aeq';...
-    -diag(lambda)*Aineq     -diag(Aeq*x-beq)      zeros(m,p);
+    -diag(lambda)*Aineq     -diag(Aineq*x-bineq)      zeros(m,p);
     Aeq                     zeros(p,m)              zeros(m,p) ];
 
 b_kkt = -rfromxln(x,lambda,nu,Q,c,Aineq,bineq,Aeq,beq,mu_barrier,m);
@@ -41,21 +41,16 @@ s = 0.99*smax; %S4 0.99 smax??
 found = 0;
 
 
-disp('start linesearch ...');
 while found == 0
     s = s*ls_beta;
-    disp(num2str(s))
-    disp(newline)
     x_new = x + s.*deltax;
     lambda_new = lambda + s.*deltalambda;
     nu_new = nu + s.*deltanu;
-    disp(['Aineq*x_new - bineq= ', num2str(Aineq*x_new-bineq)])
+
 %    TODO make this more readable
     if (Aineq*x_new - bineq < 0) && norm(rfromxln(x_new,lambda_new,nu_new,Q,c,Aineq,bineq,Aeq,beq,mu_barrier,m)) <= (1-ls_alpha*s)*norm(rfromxln(x,lambda,nu,Q,c,Aineq,bineq,Aeq,beq,mu_barrier,m))
         found = 1;
     end
-    
-    disp(['found = ',num2str(found)]);
 end
 
 end
