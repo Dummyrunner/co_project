@@ -50,6 +50,7 @@ while found == 0
     lambda_new = lambda + s.*deltalambda;
     nu_new = nu + s.*deltanu;
     disp(['Aineq*x_new - bineq= ', num2str(Aineq*x_new-bineq)])
+%    TODO make this more readable
     if (Aineq*x_new - bineq < 0) && norm(rfromxln(x_new,lambda_new,nu_new,Q,c,Aineq,bineq,Aeq,beq,mu_barrier,m)) <= (1-ls_alpha*s)*norm(rfromxln(x,lambda,nu,Q,c,Aineq,bineq,Aeq,beq,mu_barrier,m))
         found = 1;
     end
@@ -59,11 +60,3 @@ end
 
 end
 
-
-% -----------------------------------------------------------------------
-function r = rfromxln(x,lambda,nu,Q,c,Aineq,bineq,Aeq,beq,mu_barrier,m)
-r = ...
-    [Q*x + c + Aineq'*lambda + Aeq'*nu;...
-    -diag(lambda)*(Aineq*x - bineq) - mu_barrier.*ones(m,1);...
-    Aeq*x - beq];
-end
