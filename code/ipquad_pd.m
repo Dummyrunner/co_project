@@ -38,7 +38,6 @@ end
 
 
 % compute value of objective at x
-f = @(x) x'*Q*x + c'*x;
-fval = f(x);
+fval =  0.5.*x'*Q*x + c'*x;
 end
 
