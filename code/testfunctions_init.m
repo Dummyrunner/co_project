@@ -32,3 +32,7 @@ eps_feas = 1e-4;
 eps_opt = 1e-4;
 
 [x,fval,lambda,nu,eta] = ipquad_pd(Q,c,Aineq,bineq,Aeq,beq,[1; 1],1,1,gamma,eps_feas,eps_opt,ls_alpha,ls_beta)
+
+%-------------Apply quadprog() to double check-------------------
+% [quadprog_x,quadprog_fval] = quadprog(Q,c)
+
