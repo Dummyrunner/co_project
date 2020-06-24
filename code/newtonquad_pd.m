@@ -17,7 +17,7 @@ M_kkt =  [Q                        Aineq'                  Aeq';...
     -diag(lambda)*Aineq     -diag(Aineq*x-bineq)      zeros(m,p);
     Aeq                     zeros(p,m)              zeros(m,p) ];
 
-b_kkt = -rfromxln(x,lambda,nu,Q,c,Aineq,bineq,Aeq,beq,mu_barrier,m);
+b_kkt = -rfromxln(x,lambda,nu,Q,c,Aineq,bineq,Aeq,beq,mu_barrier);
 
 % Solve KKT-equality to get search direction
 deltaxln = M_kkt\b_kkt;
@@ -48,7 +48,7 @@ while found == 0
     nu_new = nu + s.*deltanu;
 
 %    TODO make this more readable
-    if (Aineq*x_new - bineq < 0) && norm(rfromxln(x_new,lambda_new,nu_new,Q,c,Aineq,bineq,Aeq,beq,mu_barrier,m)) <= (1-ls_alpha*s)*norm(rfromxln(x,lambda,nu,Q,c,Aineq,bineq,Aeq,beq,mu_barrier,m))
+    if (Aineq*x_new - bineq < 0) && norm(rfromxln(x_new,lambda_new,nu_new,Q,c,Aineq,bineq,Aeq,beq,mu_barrier)) <= (1-ls_alpha*s)*norm(rfromxln(x,lambda,nu,Q,c,Aineq,bineq,Aeq,beq,mu_barrier))
         found = 1;
     end
 end
