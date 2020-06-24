@@ -1,6 +1,18 @@
 function r = res_kkt(x,lambda,nu,Q,c,Aineq,bineq,Aeq,beq,mu_barrier)
-%RFROMXLN bla
-% blabla
+%RES_KKT compute the current KKT-residual of a quadratic
+%optimization problem inside a primal-dual interior point methad.
+% For the quadr. convex opt. problem defined by Q,c,Aineq,bineq,Aeq,beq
+% (for details see comments on ipquad_pd.m) and a current primal-dual point
+% (x,lambda,nu), this function computes the current KKT-residual.
+% 
+%--------------------------------------------------------------------------
+% Input Arguments: for detailed explanation see comments on ipquad_pd.m and
+% newtonquad_pd.m.
+%--------------------------------------------------------------------------
+% Created: 24.06.20, Daniel Bergmann
+%--------------------------------------------------------------------------
+
+
 m = size(Aineq,1);
 r = ...
     [Q*x + c + Aineq'*lambda + Aeq'*nu;...

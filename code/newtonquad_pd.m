@@ -1,6 +1,18 @@
 function [x_new, lambda_new, nu_new] = newtonquad_pd(Q, c, Aineq, bineq, Aeq, beq, ls_alpha, ls_beta, x,lambda, nu, mu_barrier)
-%UNTITLED Summary of this function goes here
-%   f(x) = 0.5*x'Qx + c'x
+%NEWTONQUAD_PD Computes search direction for pd-ip-algorithm via Newton's method and step size
+%via backtracking line search
+% Based on a given primal-dual point x,lambda,nu, this functions returns new points
+% x_new, lambda_new, nu_new with smaller kkt-residual.
+% First, a search direction is determined by applying newton's method to
+% the nonlinear equation system r = 0 with r the residual of the
+% kkt-conditions, second a suitable step-size is determined via a
+% backtracking linesearch
+% -------------------------------------------------------------------------
+% - mu_barrier is the current weight on the barrier function
+% - for other input arguments, see comments in ipquad_pd.m
+% -------------------------------------------------------------------------
+% Created: 24.06.20, Daniel Bergmann
+%--------------------------------------------------------------------------
 
 % initialize dimensions
 n = size(Q,1);

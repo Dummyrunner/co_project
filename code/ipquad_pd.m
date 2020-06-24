@@ -1,11 +1,36 @@
 function [x,fval,lambda,nu,eta] = ipquad_pd(Q,c,Aineq,bineq,Aeq,beq,x0,lambda0,nu0,gamma,eps_feas,eps_opt,ls_alpha,ls_beta)
-%UNTITLED Summary of this function goes here
-% Aineq*x0 - bineq < 0,  lambda > 0, eps_feas,eps_opt > 0, gamma in (0,1)
-count = 0;
+%IPQUAD_PD Quadratic optimization via primal-dual-interior-point-method.
+% Convex Quadr. function f(x) = (1/2)x'Qx + c'x with linear equality and
+% inequality constraints.
+% -------------------------------------------------------------------------
+% Input Arguments:
+% - Q,c define objective function
+%   dim(Q) = nxn, dim c = nx1
+% - Aineq, bineq define inequality constraints Aineq*x <= bineq
+%   dim(Aineq) = mxn, dim(bineq) = mx1
+% - Aeq, beq define inequality constraints Aeq*x == beq
+%   dim(Aineq) = pxn, dim(beq) = px1
+% - x0 init. value for the primal problem. lambda0, nu0. labda0 >= 0.
+%   Aineq*x0 <= bineq.
+%   initial values for the dual problem
+% - gamma is a reduction factor for reducing the barrier weight mu_barrier
+%   in each iteration. gamma in (0,1)
+% - eps_feas > 0 specifies the tolerance for the 2norms of the primal and the
+%   dual residual
+% - eps_opt > 0 specifies a tolerance on the surrogate duality gap
+% - ls_alpha, ls_beta are parameters for the backtracking linesearch,
+%   performed in each iteration. Typical choices: ls_alpha in [0.01,0.1].
+%   ls_beta in [0.3,0.8]
+%--------------------------------------------------------------------------
+% Created: 24.06.20, Daniel Bergmann
+%--------------------------------------------------------------------------
+
+
 x = x0;
 lambda = lambda0;
 nu = nu0;
 
+% initialize dimensions
 n = size(Q,1);
 m = size(Aineq,1);
 p = size(Aeq,1);
@@ -33,7 +58,6 @@ while found == false
         % compute search vector
         [x, lambda, nu] = newtonquad_pd(Q, c, Aineq, bineq, Aeq, beq, ls_alpha, ls_beta, x,lambda, nu, mu_barrier);
     end
-    count = count+1;
 end
 
 
