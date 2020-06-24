@@ -1,4 +1,4 @@
-function r = rfromxln(x,lambda,nu,Q,c,Aineq,bineq,Aeq,beq,mu_barrier)
+function r = res_kkt(x,lambda,nu,Q,c,Aineq,bineq,Aeq,beq,mu_barrier)
 %RFROMXLN bla
 % blabla
 m = size(Aineq,1);

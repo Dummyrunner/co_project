@@ -18,7 +18,7 @@ while found == false
     eta = -(Aineq*x - bineq)'*lambda;
     mu_barrier = gamma*eta/m;
     % Compute KKT residual vector
-    r_mu = rfromxln(x,lambda,nu,Q,c,Aineq,bineq,Aeq,beq,mu_barrier);
+    r_mu = res_kkt(x,lambda,nu,Q,c,Aineq,bineq,Aeq,beq,mu_barrier);
     r_dual = r_mu(1:m);
     r_cent = r_mu((m+1):(m+p));
     r_pri = r_mu((m+p+1):(m+p+n));
