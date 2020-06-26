@@ -1,4 +1,11 @@
 *.zip
 *.zip7
-
+*.rar
 *.asv
+
+% Latex Temp Files
+*.aux
+*.log
+*.gz
+*.URL
+*.blg
