@@ -40,6 +40,7 @@
 \newcommand{\xnull}{x_0}
 \newcommand{\ind}[2]{{#1}_{\mathrm{#2}}}
 \newcommand{\ifct}{\ind{I}{-}}
+\newcommand{\ifcthat}{\ind{\hat{I}}{-}}
 \newcommand{\xopt}{x^*}
 \newcommand{\OptProblem}{
 	\begin{aligned}
@@ -67,8 +68,7 @@
 \usepackage{amsmath} % assumes amsmath package installed
 \usepackage{amssymb}  % assumes amsmath package installed
 %
-\title{\LARGE \bf Magic Gradient Descent*
-}
+\title{\LARGE \bf Magic Gradient Descent*}
 
 
 \author{Albert Author$^{1}$ and Bernard D. Researcher$^{2}$% <-this % stops a space
@@ -136,7 +136,7 @@ Convex optimization Problems with no inequality constraints can  be solved effic
 	\ifct (x) :=
 	\begin{cases}
 		0 \quad &\text{for } u \neq 0\\
-		\infty &\text{for } u > 0 b
+		\infty &\text{for } u > 0
 	\end{cases}
 \end{align}
 on the values of the inequality constraints $ f_i, i=1,\dots,m $. Then, the optimization Problem has the shape
@@ -148,7 +148,22 @@ on the values of the inequality constraints $ f_i, i=1,\dots,m $. Then, the opti
 	& & g_i(x) = 0, \; i = 1,\dots, p.
 	\end{aligned}
 \end{align}
-This problem is an equivalent to\ref{eq:OptProblem} and has no inequality constraints. However, it is clearly neither convex nor continuous (and hence not differentiable).
+This problem is an equivalent to\ref{eq:OptProblem} and has no inequality constraints. However, it is clearly neither convex nor continuous (and hence not differentiable). Since we need these properties to solve the optimization problem computationally, we approximate the indicator function $ \ifct $ with the function
+\begin{equation}
+	\ifcthat (u) =
+	\begin{cases}
+	 \frac{1}{t}\log(-u) \quad \text{for } u < 0,\\
+	 \infty \quad \text{for } u\geq 0,
+	\end{cases}
+\end{equation}
+The parameter $ t>0 $ sets the approximation's accuracy. The higher $ t $ is, the better the indicator function is approximated.
+%TODO evt plot von Ihat einfügen!
+
+
+%TODO ápprox problem
+
+Note, that $ \frac{1}{t}\log(-u) $ is convex, increasing in $ u $, and differentiable on the admissible set. Hence the entire 
+
 
 \subsection{Newton's Method}
 Newton's method is an iterative process to solve nonlinear equality systems
