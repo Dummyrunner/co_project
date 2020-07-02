@@ -1,5 +1,7 @@
 \subsection{Concept of Barrier Methods}
-Convex optimization Problems with no inequality constraints can  be solved efficiently by using Newton's method. If inequality constraints are involved, Newton's method can not guarantee feasibiliy of a solution. It is hence desirable, to transform an inequality-constrained optimization problem into a only equality-constrained one. Therefore, we move the inequality constraints implicitley to the objective function. A simple and also precise way to do this, evaluate an  indicator function  
+Convex optimization Problems with no inequality constraints can  be solved efficiently by using Newton's method. If inequality constraints are involved, Newton's method can not guarantee feasibiliy of a solution. It is hence desirable, to transform an inequality-constrained optimization problem into a only equality-constrained one. Therefore, we move the inequality constraints implicitley to the objective function.
+%TODO improve sentence
+\todo A simple and also precise way to do this, evaluate an  indicator function  
 \begin{align}
 	\ifct (x) :=
 	\begin{cases}
@@ -13,10 +15,10 @@ on the values of the inequality constraints $ f_i, i=1,\dots,m $. Then, the opti
 	& \underset{x}{\text{minimize}}
 	& & f_0(x) + \sum_{i=1}^{m} \ifct(f_i(x))\\
 	& \text{subject to}
-	& & g_i(x) = 0, \; i = 1,\dots, p.
-	\end{aligned}
+	& & \Aeq x - \beq = 0, \; i = 1,\dots, p.
+	\end{aligned} \label{eq:ifctProblem}
 \end{align}
-This problem is an equivalent to\ref{eq:OptProblem} and has no inequality constraints. However, it is clearly neither convex nor continuous (and hence not differentiable). Since we need these properties to solve the optimization problem computationally, we approximate the indicator function $ \ifct $ with the function
+This problem is an equivalent to \eqref{eq:OptProblem} and has no inequality constraints. However, it is clearly neither convex nor continuous (and hence not differentiable). Since we need these properties to solve the optimization problem computationally, we approximate the indicator function $ \ifct $ by the function
 \begin{equation}
 	\ifcthat (u) =
 	\begin{cases}
@@ -25,13 +27,26 @@ This problem is an equivalent to\ref{eq:OptProblem} and has no inequality constr
 	\end{cases}
 \end{equation}
 The parameter $ t>0 $ sets the approximation's accuracy. The higher $ t $ is, the better the indicator function is approximated.
-%TODO evt plot von Ihat einfügen!
+By replacing the Indicator functions by $ \ifcthat $, we obtain an
+%TODO evt plot von Ihat einfügen!100% 100
+%TODO Mentioan bad numeric condition for high
+approximation 
+\begin{equation}
+\begin{aligned}
+& \underset{x}{\text{minimize}}
+& & f_0(x) - \sum_{i=1}^{m} \frac{1}{t} \log(-f_i(x)) \\
+& \text{subject to}
+& & \Aeq x - \beq = 0
+\end{aligned} \label{eq:ApproxProblem}
+\end{equation}
+of problem \eqref{eq:OptProblem}.
 
+Note, that $ \frac{1}{t}\log(-u) $ is convex, increasing in $ u $, and differentiable on the feasible set. Hence the entire function $ \sum_{i=1}^{m} \ifcthat(f_i(x)) $ is convex and \eqref{eq:ApproxProblem} is a convex Problem with differentiable objective function. These properties allow us to solve $ \eqref{eq:ApproxProblem} $ computationally.
+We call an optimal point $ \xopt(t) $ of \eqref{eq:ApproxProblem} with parameter $ t $  a central point and a solution to its dual problem $ (\lambdaopt(t),\nuopt(t)) $ a dual central point. The set of (dual) solutions of \eqref{eq:ApproxProblem} for all $ t>0 $ we call the (dual) central path.
+One can show, that solutions $ (\xoptt,\lambdaoptt,\nuoptt) $ of \eqref{eq:ApproxProblem} converge to the solution  $ (\xopt,\lambdaopt, \nuopt) $ of \eqref{eq:OptProblem} for $ t  $ going towards zero. The proof is shown in \cite{BV}. 
 
-%TODO ápprox problem
-
-Note, that $ \frac{1}{t}\log(-u) $ is convex, increasing in $ u $, and differentiable on the admissible set. Hence the entire 
-
+\subsection{Measure for the Approximation's quality}
+An immediately arising question is, what conclusions about the solution $ (\xopt,\lambdaopt, \nuopt) $ of \eqref{eq:OptProblem} can be drawn from a knowing a solution of $ \eqref{eq:ApproxProblem} $ for a certain $ t>0 $. 
 
 \subsection{Newton's Method}
 Newton's method is an iterative process to solve nonlinear equality systems
@@ -63,7 +78,7 @@ Technical conditions and proofs about convergence rates of Newton's method can b
 %	\caption{Newton's Method}
 %\end{algorithm}
 
-For the purpose of optimizing a convex, twice differentiable objective function $ \fnull $ we want to find a zero of the gradient $ \grad \fnull $. Therefore we can apply the Newton Method to solve the non-linear equation $ \Fx := \grad \fnull (x) = 0 $. By convexity, satisfying $ \grad \fnull (\xopt) = 0$ is not only neccessary, but also sufficient for $ \xopt $ to be a global minimum of $ \fnull $.
+For the purpose of optimizing a convex, twice differentiable objective function $ \fnull $ we want to find a zero of the gradient $ \grad \fnull $. Therefore we can apply the Newton Method to solve the non-linear equation \[ \Fx := \vectortwo{\grad \fnull (x)}{g(x)} = 0 \qquad \text{with }  g(x) = \vectorthree{g_1(x)}{\vdots}{g_p(x)} \]. By convexity, satisfying $ \grad \fnull (\xopt) = 0$ is not only neccessary, but also sufficient for $ \xopt $ to be a global minimum of $ \fnull $.
 
 Present main theorems/algorithm. Explain idea, explain algorithm, 
 provide a convergence proof, discuss main properties (advantages and disadvantages)

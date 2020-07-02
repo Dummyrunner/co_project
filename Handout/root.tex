@@ -36,30 +36,47 @@
 \newcommand{ \Lx}{L(x)}
 \newcommand{\xtil}{\tilde{x}}
 \newcommand{\fnull}{f_0}
-\newcommand{\todo}{TODO!}
+\newcommand{\todo}{{\color{red} TODO!}}
 \newcommand{\xnull}{x_0}
 \newcommand{\ind}[2]{{#1}_{\mathrm{#2}}}
 \newcommand{\ifct}{\ind{I}{-}}
 \newcommand{\ifcthat}{\ind{\hat{I}}{-}}
 \newcommand{\xopt}{x^*}
+\newcommand{\lambdaopt}{\lambda^*}
+\newcommand{\nuoptt}{\nu^*(t)}
+\newcommand{\xoptt}{x^*(t)}
+\newcommand{\lambdaoptt}{\lambda^*(t)}
+\newcommand{\nuopt}{\nu^*}
+\newcommand{\Aeq}{\ind{A}{eq}}
+\newcommand{\beq}{\ind{b}{eq}}
+\newcommand{\Aineq}{\ind{A}{\leq}}
+\newcommand{\bineq}{\ind{b}{\leq}}
+\newcommand{\trp}{^T}
+
 \newcommand{\OptProblem}{
 	\begin{aligned}
 	& \underset{x}{\text{minimize}}
 	& & f_0(x) \\
 	& \text{subject to}
 	& & f_i(x) \leq 0, \; i = 1, \ldots, m.\\
-	& & &g_i(x) = 0, \; i = 1,\dots, p.
+	& & &\Aeq x = \beq.
 	\end{aligned}
 	}
 \newcommand{\OptProblemquad}{
 	\begin{aligned}
 		& \underset{x}{\text{minimize}}
-		& & f_0(x) \todo auf quad anpassen!!\\
+		& & f_0(x) =\frac{1}{2} x\trp Q x + p\trp x \todo auf quad anpassen!!\\
 		& \text{subject to}
 		& & f_i(x) \leq 0, \; i = 1, \ldots, m.\\
 		& & &g_i(x) = 0, \; i = 1,\dots, p.
 	\end{aligned}
 }
+\newcommand{\vectortwo}[2]{\begin{pmatrix}
+		{#1} \\ {#2}
+\end{pmatrix}}
+\newcommand{\vectorthree}[3]{\begin{pmatrix}
+		{#1} \\ {#2} \\ {#3}
+\end{pmatrix}}
 % The following packages can be found on http:\\www.ctan.org
 %\usepackage{graphics} % for pdf, bitmapped graphics files
 %\usepackage{epsfig} % for postscript graphics files
