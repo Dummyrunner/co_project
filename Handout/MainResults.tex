@@ -57,8 +57,8 @@ argumenting with the Lagrangian and the Saddlepoint-theorem, one can show that t
 As already mentioned in section \ref{sec:approxMeasure}, one can not in general solve  \eqref{eq:ApproxProblem} without a good guess at the initial value $ \xnull $. So how to make use of the barrier concept? The idea of interior methods is to find points along the problem's central path. Two methods are introduced in the following. Emphasis of the explanations as well as the implementation in \matlab \ will be on the Primal-Dual Interior Point Method.
 \subsubsection{Interior Point Method with Full Newton Search}
 As mentioned before, for large $ t $ a good initial point $ \xnull $, meaning an initial point that is not far away from the actual minimum of \eqref{eq:OptProblem} is crucial for avoiding large numerical errors. This can be achieved by starting with optimization of \eqref{eq:ApproxProblem} for small $ t=t_1 $, which leads to a a rather bad approximation of the original problem, but also to better numerical behavior. After finding $ \xopt(t_1) $ via Newton's method, $ t $ is increased to $ t= t_2 > t_1 $ by a certain rate and  \eqref{eq:ApproxProblem} is solved again with parameter $ t = t_2 $, with choice $ \xnull = \xopt(t_1) $ for the initial point.
-For step $ n $ of the algorithm call finding $ \xoptt $ an inner iteration of the algorithm and increasing $ t_n \mapsto t_{n+1} $ with setting $ \xnull :=  \xopt(t_n)$ an outer iteration.
-
+%For step $ n $ of the algorithm call finding $ \xoptt $ the centering, or outer iteration, step of the algorithm and increasing $ t_n \mapsto t_{n+1} $ with setting $ \xnull :=  \xopt(t_n)$ an outer iteration.
+For step $ n $ of the algorithm call finding $ \xoptt $ the centering, and updating and updating $ t $ and $ \xoptt $ an outer iteration or centering point and a iteration of the newton algorithm within the centering step an inner iteration.
 \begin{algorithm}
 		\SetAlgoLined
 		\KwResult{$ \xoptt $, approximate solution of \eqref{eq:OptProblem} with $ \fnull(\xoptt) - \popt < \frac{m}{t} $ }
