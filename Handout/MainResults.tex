@@ -43,11 +43,25 @@ of problem \eqref{eq:OptProblem}.
 
 Note, that $ \frac{1}{t}\log(-u) $ is convex, increasing in $ u $, and differentiable on the feasible set. Hence the entire function $ \sum_{i=1}^{m} \ifcthat(f_i(x)) $ is convex and \eqref{eq:ApproxProblem} is a convex Problem with differentiable objective function. These properties allow us to solve $ \eqref{eq:ApproxProblem} $ computationally.
 We call an optimal point $ \xopt(t) $ of \eqref{eq:ApproxProblem} with parameter $ t $  a central point and a solution to its dual problem $ (\lambdaopt(t),\nuopt(t)) $ a dual central point. The set of (dual) solutions of \eqref{eq:ApproxProblem} for all $ t>0 $ we call the (dual) central path.
-One can show, that solutions $ (\xoptt,\lambdaoptt,\nuoptt) $ of \eqref{eq:ApproxProblem} converge to the solution  $ (\xopt,\lambdaopt, \nuopt) $ of \eqref{eq:OptProblem} for $ t  $ going towards zero. The proof is shown in \cite{BV}. 
-
+One can show, that solutions $ (\xoptt,\lambdaoptt,\nuoptt) $ of \eqref{eq:ApproxProblem} converge to the solution  $ (\xopt,\lambdaopt, \nuopt) $ of \eqref{eq:OptProblem} for $ t  \longrightarrow 0 $. The proof is shown in \cite{BV}.
+\label{sec:BarrierConcept}
 \subsection{Measure for the Approximation's quality}
 An immediately arising question is, what conclusions about the solution $ (\xopt,\lambdaopt, \nuopt) $ of \eqref{eq:OptProblem} can be drawn from a knowing a solution of $ \eqref{eq:ApproxProblem} $ for a certain $ t>0 $. 
+By \todo
+%TODO check if really right!
+argumenting with the Lagrangian and the Saddlepoint-theorem, one can show that the inequality
+\[ \fnull (\xoptt) - \popt \leq \frac{m}{t}\] holds, where $ t $ is the parameter of the approximative indicator-function $ \ifcthat $ and $ m $ the number of inequality constraints as defined above. This means, that the optimum $ \xoptt $ approximated problem \eqref{eq:ApproxProblem} has an objective value $ \fnull(\xoptt) $ that is maximally by $ \frac{m}{t} $ larger (and hence worse) than the real optimal value $ \popt $ of the original problem. Thus, one can theoretically force a desired bound on the subobtimality $ \epsilon >0 $ by just choosing $ t $ large enough, in particular $ t := \frac{m}{\epsilon} $. However, just solving \eqref{eq:ApproxProblem} with a large choice of $ t $ does not work out in general, since numerical issues can make convergence of Newton's Method dependent on the choice of the initial point $ \xnull $.
+\label{sec:approxMeasure}
 
+\subsection{Algorithmic Use of the Barrier Concept}
+As already mentioned in section \ref{sec:approxMeasure}, one can not in general solve  \eqref{eq:ApproxProblem} without a good guess at the initial value $ \xnull $. So how to make use of the barrier concept? The idea of interior methods is to find points along the problem's central path. Two methods are introduced in the following. Emphasis of the explanations as well as the implementation in \matlab \ will be on the Primal-Dual Interior Point Method.
+\subsubsection{Interior Point Method with Full Newton Search}
+As mentioned before, for large $ t $ a good initial point $ \xnull $, meaning an initial point that is not far away from the actual minimum of \eqref{eq:OptProblem} is crucial for avoiding large numerical errors. This can be achieved by starting with optimization of \eqref{eq:ApproxProblem} for small $ t=t_1 $, which means a rather bad approximation of the original problem, but also better numerical behavior. After finding $ \xopt(t_1) $ via Newton's method, $ t $ is decreased to $ t= t_2 < t_1 $ by a certain rate and  \eqref{eq:ApproxProblem} is solved again with parameter $ t = t_2 $, with choice $ \xnull = \xopt(t_1) $ for the initial point.
+
+\begin{algorithm}
+	content
+\end{algorithm}
+\subsubsection{Primal-Dual Interior Point Method}
 \subsection{Newton's Method}
 Newton's method is an iterative process to solve nonlinear equality systems
 \begin{equation}
