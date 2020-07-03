@@ -27,6 +27,7 @@
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\Rn}{\mathbb{R}^n}
 \newcommand{\Rm}{\mathbb{R}^m}
+\newcommand{\Rp}{\mathbb{R}^p}
 \newcommand{\Fx}{F(x)}
 \newcommand{\jacF}{J F}
 \newcommand{\xk}{x_k}
@@ -67,10 +68,10 @@
 \newcommand{\OptProblemquad}{
 	\begin{aligned}
 		& \underset{x}{\text{minimize}}
-		& & f_0(x) =\frac{1}{2} x\trp Q x + p\trp x \todo auf quad anpassen!!\\
+		& & f_0(x) =\frac{1}{2} x\trp Q x + c\trp x\\
 		& \text{subject to}
-		& & f_i(x) \leq 0, \; i = 1, \ldots, m.\\
-		& & &g_i(x) = 0, \; i = 1,\dots, p.
+		& & \Aineq x - \bineq \leq 0, \; \Aineq \in \R^{m\times n}, \bineq \in \Rm\\
+		& & &\Aeq - \beq = 0, \;  \Aineq \in \R^{p\times n}, \bineq \in \Rp
 	\end{aligned}
 }
 \newcommand{\vectortwo}[2]{\begin{pmatrix}
@@ -132,18 +133,20 @@ Notation. Define notation.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{PROBLEM STATEMENT AND BACKGROUND}
-
-Provide a mathematical problem description. If necessary, some background material.
-
+For theoretical discussions, we consider the convex constrained optimization problem
 \begin{equation}
 \OptProblem
 \label{eq:OptProblem}
 \end{equation}
-
--convex quadratic opt prblem with inequality constraints\\
--> how to handle ineq. constraints?
--technical relevance: optimal control, mpc
-
+with $ f_0:\Rn \longrightarrow \R $ convex and twice differentiable, $ f_i:\Rn \longrightarrow \R $ for $ i=1,\dots,m $ convex and twice \todo differentiable,
+%TODO twice diffable necc. for fi?
+$ \Aeq \in \R^{n\times p}, \beq \in  \R^p $ with equality and inequality constraints.
+Moreover, we give a \matlab-implementation of a primal-dual interiorpoint method for a convex quadratic optimization problem. Quadratic problems are a subclass of \eqref{eq:OptProblem} and denote as
+\begin{equation}
+	\OptProblemquad
+	\label{eq:QuadProblem}
+\end{equation}
+with problem matrices $ 0 \prec Q\in \R^{n \times n}, c\in \Rn. $
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{MAIN RESULTS}
