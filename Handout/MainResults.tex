@@ -125,24 +125,28 @@ Unfortunately, adding the obtained step direction $ \deltaxln $ to $ (x,\lambda,
 \todo understand algo env.
 \begin{algorithm}
 		\SetAlgoLined
-		\KwResult{Stepsize $ \sopt $, s.t. $ \lambdaplus > 0  $ and $ r_\mu $ decreases by certain amount.  }
-		initialization: Problem matrices, current $ x,\lambda,\nu $, Newton direction $ \Delta x,\Delta \lambda, \Delta \nu $, barrier parameter $ \mu $, backtracking parameters $ \alpha \geq 0, \beta \in (0,1) $. 
-		Initial step-size $ \smax := \min \{ 1, \min_{i|\Delta \lambdai<0} -\lambdai / \Delta \lambdai \}$ \\
+		\KwResult{Stepsize $ \sopt $, s.t. $ \lambdaplus > 0, f(\xplus) < 0  $ and $ r_\mu $ decreases by certain amount.  }
+		\KwData{
+		 Problem matrices, current $ x,\lambda,\nu $, Newton direction $ \Delta x,\Delta \lambda, \Delta \nu $, barrier parameter $ \mu $, backtracking parameters $ \alpha \geq 0, \beta \in (0,1) $. 
+		Initial step-size $ \smax := \min \{ 1, \min_{i|\Delta \lambdai<0} -\lambdai / \Delta \lambdai \}$ }
+	\vspace{0.5cm}
+			compute $ \rmu $\;
+			$ s = \smax $\;
+			$ found = false $\;
+			
 		
-		
-	%	\While{While condition}{
-	%		instructions\;
-	%		\eIf{condition}{
-	%			instructions1\;
-	%			instructions2\;
-	%		}{
-	%			instructions3\;
-	%		}
-	%	}
-	%	\caption{Newton's Method}
+		\While{$ found == false $}
+		{		
+				set $ s = \beta s $\;
+				compute $ (\xplus,\lambdaplus,\nuplus) $\;
+				compute $ r_\mu(\xplus, \lambdaplus,\nuplus)$ and $ f(\xplus) $\;
+%				\If{$ f(\xplus) < 0 $ and  $ r_\mu(\xplus, \lambdaplus,\nuplus) \leq (1-\alpha s)  \norm{\rmu}$}{$found = true$}\;
+	\If{$ f(\xplus) < 0 $ and $\norm{r_\mu(\xplus, \lambdaplus,\nuplus)} \leq (1-\alpha s)\norm{\rmu}  $ }{$ found = true $}
+		}
+		\caption{Backtracking linesearch}
 \end{algorithm}
 
-
+\todo explain notation of f without index
 
 
 
