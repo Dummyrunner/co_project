@@ -58,7 +58,7 @@ As already mentioned in section \ref{sec:approxMeasure}, one can not in general 
 \subsubsection{Interior Point Method with Full Newton Search}
 As mentioned before, for large $ t $ a good initial point $ \xnull $, meaning an initial point that is not far away from the actual minimum of \eqref{eq:OptProblem} is crucial for avoiding large numerical errors. This can be achieved by starting with optimization of \eqref{eq:ApproxProblem} for small $ t=t_1 $, which leads to a a rather bad approximation of the original problem, but also to better numerical behavior. After finding $ \xopt(t_1) $ via Newton's method, $ t $ is increased to $ t= t_2 > t_1 $ by a certain rate and  \eqref{eq:ApproxProblem} is solved again with parameter $ t = t_2 $, with choice $ \xnull = \xopt(t_1) $ for the initial point.
 %For step $ n $ of the algorithm call finding $ \xoptt $ the centering, or outer iteration, step of the algorithm and increasing $ t_n \mapsto t_{n+1} $ with setting $ \xnull :=  \xopt(t_n)$ an outer iteration.
-For step $ n $ of the algorithm call finding $ \xoptt $ the centering, and updating and updating $ t $ and $ \xoptt $ an outer iteration or centering point and a iteration of the newton algorithm within the centering step an inner iteration.
+For step $ n $ of the algorithm call finding $ \xoptt $ the centering, and updating and updating $ t $ and $ \xoptt $ an outer iteration or centering point and a iteration of the newton algorithm within the centering step an inner iteration. The whole procedure is written in Algorithm \ref{alg:BarrierFullNewton}.
 
 % notes on convergence rates:
 % complexity analysis for self concordant functions. quad, lin. problems special case of s c fct.
@@ -69,6 +69,7 @@ For step $ n $ of the algorithm call finding $ \xoptt $ the centering, and updat
 
 \begin{algorithm}
 		\SetAlgoLined
+		\SetKwComment{bla}{abc}{keks}
 		\KwResult{$ \xoptt $, approximate solution of \eqref{eq:OptProblem} with $ \fnull(\xoptt) - \popt < \frac{m}{t} $ }
 		initialization: Matrices $ 0 \prec Q\in \R^{n \times n}, c\in \Rn. $ defining the objective function, matrices $ \Aeq, \beq, \Aineq, \bineq $ defining constraints, initial point $ x $, initial approximation parameter $ t > 0 $, rate for increasing appprox. param. $ \mu > 1 $ tolerance $ \epsilon $ \todo dimensions of constr. matrices\\
 		\While{$\frac{m}{t} \geq \epsilon$}{
@@ -123,11 +124,10 @@ The detailed procedure of the backtracking linesearch is displayed in Algorithm 
 		\KwData{
 		 Problem matrices, current $ x,\lambda,\nu $, Newton direction $ \Delta x,\Delta \lambda, \Delta \nu $, barrier parameter $ \mu $, backtracking parameters $ \alpha \geq 0, \beta \in (0,1) $. 
 		Initial step-size $ \smax := \min \{ 1, \min_{i|\Delta \lambdai<0} -\lambdai / \Delta \lambdai \}$ }
-	\vspace{0.5cm}
+		\BlankLine
 			compute $ \rmu $\;
 			$ s = \smax $\;
 			$ found = false $\;
-			
 		
 		\While{$ found == false $}
 		{		
@@ -141,6 +141,16 @@ The detailed procedure of the backtracking linesearch is displayed in Algorithm 
 		\label{alg:backtracking}
 \end{algorithm}
 
+Finally, we can present the entire algortithm of the \pdm.
+
+\begin{algorithm}
+		\SetAlgoLined
+	\KwResult{approximate optimizer $ \xopthat $, approx. opt. value $ \popthat $, approx. dual optimizer $ (\lambdaopthat, \nuopthat) $, surrogate duality gap  $ \etaopthat $ as measure of optimality}
+	\KwData{Problem matrices, primal-dual initial point $ (x,\lambda,\nu) $ with $ f_i(x)<0 $ for all $ i=1,\dots,m $, $ \lambda > 0, \nu \in \Rp $ (initial point strictly feasibile), reduction factor $ \gamma \in (0,1) $, tolerances $ \epsfeas, \epsopt > 0 $}
+	\BlankLine
+\end{algorithm}
+
+
 \todo explain notation of f without index
 
 
@@ -149,6 +159,7 @@ The detailed procedure of the backtracking linesearch is displayed in Algorithm 
 \todo
 
 \subsection{Newton's Method}
+\todo move to beginning
 Newton's method is an iterative process to solve nonlinear equality systems
 \begin{equation}
 \Fx= 0
@@ -178,7 +189,10 @@ Technical conditions and proofs about convergence rates of Newton's method can b
 %	\caption{Newton's Method}
 %\end{algorithm}
 
-For the purpose of optimizing a convex, twice differentiable objective function $ \fnull $ we want to find a zero of the gradient $ \grad \fnull $. Therefore we can apply the Newton Method to solve the non-linear equation \[ \Fx := \vectortwo{\grad \fnull (x)}{g(x)} = 0 \qquad \text{with }  g(x) = \vectorthree{g_1(x)}{\vdots}{g_p(x)} \]. By convexity, satisfying $ \grad \fnull (\xopt) = 0$ is not only neccessary, but also sufficient for $ \xopt $ to be a global minimum of $ \fnull $.
+For the purpose of optimizing a convex, twice differentiable objective function $ \fnull $ we want to find a zero of the gradient $ \grad \fnull $. Therefore we can apply the Newton Method to solve the non-linear equation \[ \Fx := \vectortwo{\grad \fnull (x)}{g(x)} = 0 \qquad \text{with }  g(x) = \vectorthree{g_1(x)}{\vdots}{g_p(x)} \]. By convexity, satisfying $ \grad \fnull (\xopt) = 0$ is not only neccessary, but also sufficient for $ \xopt $ to be a global minimum of $ \fnull $.\\
+
+
+
 
 Present main theorems/algorithm. Explain idea, explain algorithm, 
 provide a convergence proof, discuss main properties (advantages and disadvantages)
