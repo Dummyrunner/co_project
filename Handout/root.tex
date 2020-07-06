@@ -16,7 +16,7 @@
 
 
 % MYTHINGS
-\usepackage{amssymb,amsmath, amsfonts,color}
+\usepackage{amssymb,amsmath, amsfonts,color,bbold}
 \usepackage[ruled, vlined]{algorithm2e}
 \newtheorem{theorem}{Theorem}
 \newtheorem{definition}{Definition}
@@ -29,7 +29,9 @@
 \newcommand{\Rm}{\mathbb{R}^m}
 \newcommand{\Rp}{\mathbb{R}^p}
 \newcommand{\Fx}{F(x)}
-\newcommand{\jacF}{J F}
+\newcommand{\fx}{f(x)}
+\newcommand{\jac}{J}
+\newcommand{\jacF}{\jac F}
 \newcommand{\xk}{x_k}
 \newcommand{\Fxk}{F(\xk)}
 \newcommand{\jacFxk}{\jacF (\xk)}
@@ -55,6 +57,14 @@
 \newcommand{\bineq}{\ind{b}{\leq}}
 \newcommand{\trp}{^T}
 \newcommand{\matlab}{MATLAB}
+\newcommand{\pdm}{Primal-Dual Method}
+\newcommand{\pdipm}{Primal-Dual Interior Point Method}
+\newcommand{\ones}{\mathbb{1}}
+\newcommand{\rmu}{r_\mu (x,\lambda,\nu)}
+\newcommand{\rdual}{\ind{r}{dual}}
+\newcommand{\rcent}{\ind{r}{cent}}
+\newcommand{\rpri}{\ind{r}{pri}}
+\newcommand{\diag}{\mathrm{diag}}
 
 \newcommand{\OptProblem}{
 	\begin{aligned}
