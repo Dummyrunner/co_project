@@ -70,7 +70,7 @@ For step $ n $ of the algorithm call finding $ \xoptt $ the centering, and updat
 \begin{algorithm}
 		\SetAlgoLined
 		\KwResult{$ \xoptt $, approximate solution of \eqref{eq:OptProblem} with $ \fnull(\xoptt) - \popt < \frac{m}{t} $ }
-		initialization\; Matrices $ 0 \prec Q\in \R^{n \times n}, c\in \Rn. $ defining the objective function, matrices $ \Aeq, \beq, \Aineq, \bineq $ defining constraints, initial point $ x $, initial approximation parameter $ t > 0 $, rate for increasing appprox. param. $ \mu > 1 $ tolerance $ \epsilon $ \todo dimensions of constr. matrices\\
+		initialization: Matrices $ 0 \prec Q\in \R^{n \times n}, c\in \Rn. $ defining the objective function, matrices $ \Aeq, \beq, \Aineq, \bineq $ defining constraints, initial point $ x $, initial approximation parameter $ t > 0 $, rate for increasing appprox. param. $ \mu > 1 $ tolerance $ \epsilon $ \todo dimensions of constr. matrices\\
 		\While{$\frac{m}{t} \geq \epsilon$}{
 			Compute $ \xoptt $ by solving $ \eqref{eq:ApproxProblem} $ via Newton's Method, starting at $ x $\;
 			Update $ x := \xoptt $\;
@@ -93,12 +93,57 @@ Like the previously introduced algorithm, the Primal-Dual Interior Point method 
 \todo write dual problem\\
 problem \eqref{eq:ApproxProblem} into account. In particular Newton's method is applied to a system of residual terms, that have to equal all zero by the KKT-conditons\\
 \todo KKT cond.
-Stacked in one vector to apply newton on, this yields
+Stacked in one vector, this yields
 \begin{align}
 \begin{split}
-	 F(x) :&= \rmu = \vectorthree{\rdual}{\rcent}{\rpri}\\ &= \vectorthree{\grad \fnull(x) + \jac \fx \trp \lambda + \Aeq \trp \nu}{-\diag(\lambda)\fx - \mu \ones}{\Aeq x - \beq}
+	 F(x,\lambda,\nu) :&= \rmu = \vectorthree{\rdual}{\rcent}{\rpri}\\ &= \vectorthree{\grad \fnull(x) + \jac \fx \trp \lambda + \Aeq \trp \nu}{-\diag(\lambda)\fx - \mu \ones}{\Aeq x - \beq} = 0.
 \end{split}
 \end{align}
+to apply Newton on. For formulation of the linear Newton equality, we also compute  the jacobian
+\begin{align}
+	\frac{\mathrm{d} \; ( \rmu)}{\mathrm{d} (x,\lambda,\nu)\trp} = 
+	\begin{pmatrix}
+		\hessfnull + \sum_{i = 1}^{m} \lambdai \hessfi & \jac \fx & \Aeq \trp\\
+		-\diag(\lambda) \jac \fx & -\diag(\fx) & 0\\
+		\Aeq & 0 & 0
+	\end{pmatrix}
+\end{align}
+of the residual. 
+Consequently, the Newton equality for finding the search direction $ \deltaxln $ in each newton step is exactly
+\begin{align}
+		\begin{pmatrix}
+	\hessfnull + \sum_{i = 1}^{m} \lambdai \hessfi & \jac \fx & \Aeq \trp\\
+	-\diag(\lambda) \jac \fx & -\diag(\fx) & 0\\
+	\Aeq & 0 & 0
+	\end{pmatrix} \vectorthree{\Delta x}{\Delta \lambda}{\Delta \nu} = - \vectorthree{\rdual}{\rcent}{\rpri}.
+\end{align}(
+\todo equality should fit in col.!\\
+
+Unfortunately, adding the obtained step direction $ \deltaxln $ to $ (x,\lambda,\nu) $, does not in general yield a feasible point. Therefore we compute a suitable step-size $ \sopt $ via a backtracking-linesearch, such that a certain decrease of the residual and feasibility is guaranteed for the next iteration point \[ \vectorthree{\xplus}{\lambdaplus}{\nuplus} = \xlnvec + \sopt  \vectorthree{\Delta x}{\Delta  \lambda}{\Delta \nu}.\]
+
+%TODO algo env undredstand
+\todo understand algo env.
+\begin{algorithm}
+		\SetAlgoLined
+		\KwResult{Stepsize $ \sopt $, s.t. $ \lambdaplus > 0  $ and $ r_\mu $ decreases by certain amount.  }
+		initialization: Problem matrices, current $ x,\lambda,\nu $, Newton direction $ \Delta x,\Delta \lambda, \Delta \nu $, barrier parameter $ \mu $, backtracking parameters $ \alpha \geq 0, \beta \in (0,1) $. 
+		Initial step-size $ \smax := \min \{ 1, \min_{i|\Delta \lambdai<0} -\lambdai / \Delta \lambdai \}$ \\
+		
+		
+	%	\While{While condition}{
+	%		instructions\;
+	%		\eIf{condition}{
+	%			instructions1\;
+	%			instructions2\;
+	%		}{
+	%			instructions3\;
+	%		}
+	%	}
+	%	\caption{Newton's Method}
+\end{algorithm}
+
+
+
 
 
 \subsection{Complexity Analysis Barrier Method}
