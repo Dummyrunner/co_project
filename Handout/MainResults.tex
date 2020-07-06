@@ -75,14 +75,9 @@ For step $ n $ of the algorithm call finding $ \xoptt $ the centering, and updat
 			Compute $ \xoptt $ by solving $ \eqref{eq:ApproxProblem} $ via Newton's Method, starting at $ x $\;
 			Update $ x := \xoptt $\;
 			Increase $ t $ by $ t := \mu t $
-%			\eIf{condition}{
-%				instructions1\;
-%				instructions2\;
-%			}{
-%				instructions3\;
-%			}
 		}
 		\caption{Interior Point Method with full Newton search}
+		\label{alg:BarrierFullNewton}
 \end{algorithm}
 
 
@@ -120,9 +115,8 @@ Consequently, the Newton equality for finding the search direction $ \deltaxln $
 \todo equality should fit in col.!\\
 
 Unfortunately, adding the obtained step direction $ \deltaxln $ to $ (x,\lambda,\nu) $, does not in general yield a feasible point. Therefore we compute a suitable step-size $ \sopt $ via a backtracking-linesearch, such that a certain decrease of the residual and feasibility is guaranteed for the next iteration point \[ \vectorthree{\xplus}{\lambdaplus}{\nuplus} = \xlnvec + \sopt  \vectorthree{\Delta x}{\Delta  \lambda}{\Delta \nu}.\]
+The detailed procedure of the backtracking linesearch is displayed in Algorithm \ref{alg:backtracking}.
 
-%TODO algo env undredstand
-\todo understand algo env.
 \begin{algorithm}
 		\SetAlgoLined
 		\KwResult{Stepsize $ \sopt $, s.t. $ \lambdaplus > 0, f(\xplus) < 0  $ and $ r_\mu $ decreases by certain amount.  }
@@ -144,6 +138,7 @@ Unfortunately, adding the obtained step direction $ \deltaxln $ to $ (x,\lambda,
 	\If{$ f(\xplus) < 0 $ and $\norm{r_\mu(\xplus, \lambdaplus,\nuplus)} \leq (1-\alpha s)\norm{\rmu}  $ }{$ found = true $}
 		}
 		\caption{Backtracking linesearch}
+		\label{alg:backtracking}
 \end{algorithm}
 
 \todo explain notation of f without index
