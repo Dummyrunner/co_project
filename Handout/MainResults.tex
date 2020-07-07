@@ -92,6 +92,7 @@ problem \eqref{eq:ApproxProblem} into account. In particular Newton's method is 
 Stacked in one vector, this yields
 \begin{align}
 \begin{split}
+\label{eq:KKTres}
 	 F(x,\lambda,\nu) :&= \rmu = \vectorthree{\rdual}{\rcent}{\rpri}\\ &= \vectorthree{\grad \fnull(x) + \jac \fx \trp \lambda + \Aeq \trp \nu}{-\diag(\lambda)\fx - \mu \ones}{\Aeq x - \beq} = 0.
 \end{split}
 \end{align}
@@ -107,6 +108,7 @@ to apply Newton on. For formulation of the linear Newton equality, we also compu
 of the residual. 
 Consequently, the Newton equality for finding the search direction $ \deltaxln $ in each newton step is exactly
 \begin{align}
+\label{eq:rmuNewtonEq}
 		\begin{pmatrix}
 	\hessfnull + \sum_{i = 1}^{m} \lambdai \hessfi & \jac \fx & \Aeq \trp\\
 	-\diag(\lambda) \jac \fx & -\diag(\fx) & 0\\
@@ -148,11 +150,30 @@ Finally, we can present the entire algortithm of the \pdm.
 	\KwResult{approximate optimizer $ \xopthat $, approx. opt. value $ \popthat $, approx. dual optimizer $ (\lambdaopthat, \nuopthat) $, surrogate duality gap  $ \etaopthat $ as measure of optimality}
 	\KwData{Problem matrices, primal-dual initial point $ (x,\lambda,\nu) $ with $ f_i(x)<0 $ for all $ i=1,\dots,m $, $ \lambda > 0, \nu \in \Rp $ (initial point strictly feasibile), reduction factor $ \gamma \in (0,1) $, tolerances $ \epsfeas, \epsopt > 0 $}
 	\BlankLine
+	
+	Initialization\;
+	determine problem dimensions $ n,m,p $\;
+	set $ found=false $\;
+	\BlankLine
+	
+	\While{$ found==false $}{
+		compute surrogate duality gap: $ \etahat = - \fx \trp \lambda $\;
+		compute KKT residual vector $ \rmu $ via \eqref{eq:KKTres}\;
+		compute search direction $ (\Delta x, \Delta \lambda, \Delta \nu) $ by solving \eqref{eq:rmuNewtonEq}\;
+		determine suitable step size $ s $ via backtracking algorithm  \ref{alg:backtracking}\;
+		update current primal and dual points:
+		$ (x,\lambda,\nu) = (x,\lambda,\nu) + (\Delta x, \Delta \lambda, \Delta \nu) $\;
+	}
+	return $ \xopthat = x, \popthat = f_0(\xopthat), \lambdaopthat = \lambda, \nuopthat = \nu, \etaopthat=\etahat $\;
+	\caption{Primal-Dual Interior Point Method}
 \end{algorithm}
 
+\begin{remark}
+	If a strictly feasible primal variable $ x \in \Rn $ is known, $ \lambda= -1/f_i(x) \geq 0, \nu=0 $ is always a valid choice for the initial dual variables.
+\end{remark}
 
 \todo explain notation of f without index
-
+\todo remark on finding feasible start point
 
 
 \subsection{Complexity Analysis Barrier Method}
