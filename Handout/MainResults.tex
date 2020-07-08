@@ -249,7 +249,7 @@ The upper bound
 \end{equation}
 on the maximal number of newton iterations that is needed to obtain a certain accuracy, determined by the initial point $ x $, the optimal value $ \popt $, $ \gamma $ a constant dependent on the backtracking parameters and $ c $ dependent on the accuracy tolerance. One can show via reasoning with the Lagrangian, \todo detailed?\\
 that this bound holds uniformly for any parameter $ t $ for all problems \eqref{eq:ApproxProblem}.
- Since there are exactly \[ \lceil \frac{\log(m/\epsilon t_0)}{\log \mu} \rceil \] outer steps neccessary to solve  \eqref{eq:ApproxProblem} with inital parameter $ t=t_0  $ and accuracy tolerance $ \epsilon $, the entire barrier method needs maximally
+ Since there are exactly \[ \ceil*{ \frac{\log(m/\epsilon t_0)}{\log \mu}} \] outer steps neccessary to solve  \eqref{eq:ApproxProblem} with inital parameter $ t=t_0  $ and accuracy tolerance $ \epsilon $, the entire barrier method needs maximally
  \[ N = \dots  \] \todo\\
  iterations to yield a result with a suboptimality of $ \epsilon $ or smaller.
 
@@ -273,8 +273,9 @@ The procedure ececuting a Newton search is summarized in \eqref{alg:newton}.
 	\SetAlgoLined
 	\KwResult{$ \xtil $, approximate solution of nonlinear system of equalities $ \Fx = 0$, residual tolerance $ \epsres >0$, cauchy-tolerance $ \epscauchy >0 $}
 	\KwData{Function $ F: \Rn \longrightarrow \Rn $, initial point $ \xnull $}
+	\BlankLine
 	\While{$ \norm{x - \xlast} \geq \epscauchy $ or $ \norm{\Fx} \geq \epsres $}{
-		compute Newton direction $ \Delta x $ by solving $ \jac F(x) \Deltax = -F(x) $\;
+		compute Newton direction $ \Delta x $ by solving $ \jac F(x) \Delta x = -F(x) $\;
 		remember last interation for checking term. crit. $ \xlast = x $\;
 		update current point by $ x = x +  \Delta x$\;
 	}
