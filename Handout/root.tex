@@ -66,6 +66,8 @@
 \newcommand{\epsopt}{\ind{\epsilon}{opt}}
 \newcommand{\gradphiexp}{\sum_{i=1}^{m} \frac{1}{-f_i(x)} \grad f_i(x)}
 \newcommand{\hessphiexp}{\sum_{i=1}^{m} \frac{1}{f_i(x)^2} \grad f_i(x) \grad f_i(x)\trp +  \sum_{i=1}^{m}\frac{1}{-f_i(x)} \hessfi}
+\newcommand{\gradphiexpv}[1]{\sum_{i=1}^{m} \frac{1}{-f_i(#1)} \grad f_i(#1)}
+\newcommand{\hessphiexpv}[1]{\sum_{i=1}^{m} \frac{1}{f_i(#1)^2} \grad f_i(#1) \grad f_i(#1)\trp +  \sum_{i=1}^{m}\frac{1}{-f_i(#1)} \hessfi}
 \newcommand{\popt}{p^*}
 \newcommand{\popthat}{\hat{p}^*}
 \newcommand{\etahat}{\hat{\eta}}
@@ -90,7 +92,8 @@
 %\newcommand{\norm}[1]{\parallel #1 \parallel}
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 \newcommand{\phix}{\phi(x)}
-
+\newcommand{\nuhat}{\hat{\nu}}
+\newcommand{\movert}{\frac{m}{t}}
 
 \newcommand{\OptProblem}{
 	\begin{aligned}
@@ -124,7 +127,7 @@
 		& \underset{x}{\text{minimize}}
 		& & tf_0(x) + \phix \\
 		& \text{subject to}
-		& & &\Aeq x = \beq.
+		& &\Aeq x = \beq.
 	\end{aligned}
 }
 

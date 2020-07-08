@@ -17,7 +17,7 @@ on the values of the inequality constraints $ f_i, i=1,\dots,m $. Then, the opti
 	& \underset{x}{\text{minimize}}
 	& & f_0(x) + \sum_{i=1}^{m} \ifct(f_i(x))\\
 	& \text{subject to}
-	& & \Aeq x - \beq = 0, \; i = 1,\dots, p.
+	& & \Aeq x - \beq = 0.
 	\end{aligned} \label{eq:ifctProblem}
 \end{align}
 This problem is an equivalent to \eqref{eq:OptProblem} and has no inequality constraints. However, it is clearly neither convex nor continuous (and hence not differentiable). Since we need these properties to solve the optimization problem computationally, we approximate the indicator function $ \ifct $ by the function
@@ -48,23 +48,53 @@ We call an optimal point $ \xopt(t) $ of \eqref{eq:ApproxProblem} with parameter
 One can show, that solutions $ (\xoptt,\lambdaoptt,\nuoptt) $ of \eqref{eq:ApproxProblem} converge to the solution  $ (\xopt,\lambdaopt, \nuopt) $ of \eqref{eq:OptProblem} for $ t  \longrightarrow 0 $. The proof is shown in \cite{BV}.
 \label{sec:BarrierConcept}
 \subsection{Measure for the Approximation's quality}
-An immediately arising question is, what conclusions about the solution $ (\xopt,\lambdaopt, \nuopt) $ of \eqref{eq:OptProblem} can be drawn from a knowing a solution of $ \eqref{eq:ApproxProblem} $ for a certain $ t>0 $. 
+An immediately arising question is, what conclusions about the solution $ (\xopt,\lambdaopt, \nuopt) $ of \eqref{eq:OptProblem} can be drawn from a knowing a solution of $ \eqref{eq:ApproxProblem} $ for a certain $ t>0 $ about the value $ \fnull(\xoptt) $  of a central point $ \xoptt $, compared with the optimal value $ \popt $ of the original problem. 
 By \todo show arguments?\\
 For compactness, we denote the barrier term of a the approximated problem as
 \[ \phix = - \sum_{i=1}^{m} \log(-f_i(x)),\] and keep in mind, that its Jacobian and Hessian are
 \begin{align*}
-	\grad \phix&= \gradphiexp\\
+	\grad \phix&= \gradphiexp,\\
 	\grad^2 \phix &= \hessphiexp.
 \end{align*}
+For the sake of simplifying notation, throughout this section we consider the problem
+\begin{equation}
+	\ApproxOptProblemMultt \label{eq:ApproxProblemMult}
+\end{equation}
+that is obtained by multiplying the objective in \eqref{eq:ApproxProblem} with $ t>0 $. The original and the obtained problem are equvialent.
+For an arbitrary central point $ \xoptt $ we know, that $ \xoptt $ is a strictly feasible point of \eqref{eq:OptProblem}. Since $ \xoptt $ solves \eqref{eq:ApproxProblemMult}, there exists $ \nuhat \in \Rp$, such that
+\todo define $ L_t $ as gradient for approx problem
+\begin{align}
+	\grad L_t(\xoptt, \nuhat) &= t \grad \fnull(\xoptt) + \grad \phi(\xoptt) + \Aeq \trp \nuhat\\
+					&= t\grad f_0 (\xoptt) \notag\\&\quad+ \gradphiexpv{\xoptt} + \Aeq\trp \nuhat.\\&=0.
+					\label{eq:centralPathLagr}
+\end{align}
+holds. We keep in mind, that $ \xoptt $ minim
+Using this insight, we know that there exists a dual feasible point $ (\xoptt,\lambdaoptt, \nuoptt) $ of the original problem \eqref{eq:OptProblem}. In particular, we choose
+\begin{gather*}
+	\lambdaoptt = -\frac{1}{tf_i(\xoptt)}\text{ for }i=1,\dots,m,\quad \nuoptt= \frac{\nuhat}{t}.
+\end{gather*}
+Here, $ \lambdaoptt > 0 $ follows from $ f_i(\xopt) < 0 $ for all $ i = 1,\dots,m $ since $ \xopt  $ is strictly feasible.
 
 
-%TODO check if really right!
+Note, that \eqref{eq:centralPathLagr} is the derivative of the Lagrangian 
+\[ L(x,\lambda,\nu) = f_0(x) + \sum_{i=1}^{m}\lambdai^*(t) f_i(x) + \nuoptt \trp (\Aeq \xoptt - \beq) \]
+ dividied by $ t>0 $ of the original problem.
+The Lagrangian is convex in the first coordinate, hence we infer that $ \xoptt $ minimizes the Lagrangian  of the original problem for any fixed $ ()\lambda,\nu) $.
+For the dual function of the original Problem, we obtain
+\begin{align}
+	g(\lambdaoptt,\nuoptt) &= f_0(\xoptt) + \sum_{i=1}^{m} \lambdai^*(t) f_i(\xoptt))+\nuoptt \trp (\Aeq \xoptt - \beq)\\ & = f_0(\xoptt) - \movert.
+\end{align}
+The second of the three summands adds up to $ m\cdot 1 $, because by the particular choice of $ \lambdaoptt $  fractions cancel out. The last summand equals zero, since $ \Aeq \xoptt - \beq = 0$.
+
 
 
 
 %OLD
 %argumenting with the Lagrangian and the Saddlepoint-theorem, one can show that the inequality
-%\[ \fnull (\xoptt) - \popt \leq \frac{m}{t}\] holds, where $ t $ is the parameter of the approximative indicator-function $ \ifcthat $ and $ m $ the number of inequality constraints as defined above. This means, that the optimum $ \xoptt $ approximated problem \eqref{eq:ApproxProblem} has an objective value $ \fnull(\xoptt) $ that is maximally by $ \frac{m}{t} $ larger (and hence worse) than the real optimal value $ \popt $ of the original problem. Thus, one can theoretically force a desired bound on the subobtimality $ \epsilon >0 $ by just choosing $ t $ large enough, in particular $ t := \frac{m}{\epsilon} $. However, just solving \eqref{eq:ApproxProblem} with a large choice of $ t $ does not work out in general, since numerical issues can make convergence of Newton's Method dependent on the choice of the initial point $ \xnull $.
+%\[ \fnull (\xoptt) - \popt \leq \frac{m}{t}\] holds, where $ t $ is the parameter of the approximative indicator-function $ \ifcthat $ and $ m $ the number of inequality constraints as defined above.
+
+
+By weak duality, this means, that the optimum $ \xoptt $ approximated problem \eqref{eq:ApproxProblem} has an objective value $ \fnull(\xoptt) $ that is maximally by $ \frac{m}{t} $ larger (and hence worse) than the real optimal value $ \popt $ of the original problem. Thus, one can theoretically force a desired bound on the subobtimality $ \epsilon >0 $ by just choosing $ t $ large enough, in particular $ t := \frac{m}{\epsilon} $. However, just solving \eqref{eq:ApproxProblem} with a large choice of $ t $ does not work out in general, since numerical issues can make convergence of Newton's Method dependent on the choice of the initial point $ \xnull $.
 %\label{sec:approxMeasure}
 
 \subsection{Algorithmic Use of the Barrier Concept}
