@@ -219,6 +219,8 @@ Finally, we can present the entire algortithm of the \pdm.
 		$ (x,\lambda,\nu) = (x,\lambda,\nu) + (\Delta x, \Delta \lambda, \Delta \nu) $\;
 	}
 	return $ \xopthat = x, \popthat = f_0(\xopthat), \lambdaopthat = \lambda, \nuopthat = \nu, \etaopthat=\etahat $\;
+	
+	
 	\caption{Primal-Dual Interior Point Method}
 	\label{alg:pdip}
 \end{algorithm}
@@ -270,12 +272,13 @@ The procedure ececuting a Newton search is summarized in \eqref{alg:newton}.
 \begin{algorithm}
 	\SetAlgoLined
 	\KwResult{$ \xtil $, approximate solution of nonlinear system of equalities $ \Fx = 0$, residual tolerance $ \epsres >0$, cauchy-tolerance $ \epscauchy >0 $}
-	initialization\; Function $ F: \Rn \longrightarrow \Rn $, initial point $ \xnull $\\
+	\KwData{Function $ F: \Rn \longrightarrow \Rn $, initial point $ \xnull $}
 	\While{$ \norm{x - \xlast} \geq \epscauchy $ or $ \norm{\Fx} \geq \epsres $}{
-		compute Newton direction $ \Delta x $ by solving $ \jacFxk \Deltax = -F(x) $
-		remember last interation for checking term. crit. $ \xlast = x $
-		update current point by $ x = x +  \Delta x$
-}
+		compute Newton direction $ \Delta x $ by solving $ \jac F(x) \Deltax = -F(x) $\;
+		remember last interation for checking term. crit. $ \xlast = x $\;
+		update current point by $ x = x +  \Delta x$\;
+	}
+	return $ \tilde{x} = x $\;
 	\caption{Newton's Method}
 	\label{alg:newton}
 \end{algorithm}
