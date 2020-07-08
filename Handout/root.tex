@@ -64,7 +64,8 @@
 
 \newcommand{\epsfeas}{\ind{\epsilon}{feas}}
 \newcommand{\epsopt}{\ind{\epsilon}{opt}}
-
+\newcommand{\gradphiexp}{\sum_{i=1}^{m} \frac{1}{-f_i(x)} \grad f_i(x)}
+\newcommand{\hessphiexp}{\sum_{i=1}^{m} \frac{1}{f_i(x)^2} \grad f_i(x) \grad f_i(x)\trp +  \sum_{i=1}^{m}\frac{1}{-f_i(x)} \hessfi}
 \newcommand{\popt}{p^*}
 \newcommand{\popthat}{\hat{p}^*}
 \newcommand{\etahat}{\hat{\eta}}
@@ -88,6 +89,7 @@
 \newcommand{\deltaxln}{(\Delta x, \Delta \lambda,\Delta \nu)}
 %\newcommand{\norm}[1]{\parallel #1 \parallel}
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\phix}{\phi(x)}
 
 
 \newcommand{\OptProblem}{
@@ -117,7 +119,14 @@
 		& & &\Aeq x - \beq = 0, \;
 	\end{aligned}
 }
-
+\newcommand{\ApproxOptProblemMultt}{
+	\begin{aligned}
+		& \underset{x}{\text{minimize}}
+		& & tf_0(x) + \phix \\
+		& \text{subject to}
+		& & &\Aeq x = \beq.
+	\end{aligned}
+}
 
 
 \newcommand{\vectortwo}[2]{\begin{pmatrix}

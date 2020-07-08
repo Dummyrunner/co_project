@@ -50,10 +50,22 @@ One can show, that solutions $ (\xoptt,\lambdaoptt,\nuoptt) $ of \eqref{eq:Appro
 \subsection{Measure for the Approximation's quality}
 An immediately arising question is, what conclusions about the solution $ (\xopt,\lambdaopt, \nuopt) $ of \eqref{eq:OptProblem} can be drawn from a knowing a solution of $ \eqref{eq:ApproxProblem} $ for a certain $ t>0 $. 
 By \todo show arguments?\\
+For compactness, we denote the barrier term of a the approximated problem as
+\[ \phix = - \sum_{i=1}^{m} \log(-f_i(x)),\] and keep in mind, that its Jacobian and Hessian are
+\begin{align*}
+	\grad \phix&= \gradphiexp\\
+	\grad^2 \phix &= \hessphiexp.
+\end{align*}
+
+
 %TODO check if really right!
-argumenting with the Lagrangian and the Saddlepoint-theorem, one can show that the inequality
-\[ \fnull (\xoptt) - \popt \leq \frac{m}{t}\] holds, where $ t $ is the parameter of the approximative indicator-function $ \ifcthat $ and $ m $ the number of inequality constraints as defined above. This means, that the optimum $ \xoptt $ approximated problem \eqref{eq:ApproxProblem} has an objective value $ \fnull(\xoptt) $ that is maximally by $ \frac{m}{t} $ larger (and hence worse) than the real optimal value $ \popt $ of the original problem. Thus, one can theoretically force a desired bound on the subobtimality $ \epsilon >0 $ by just choosing $ t $ large enough, in particular $ t := \frac{m}{\epsilon} $. However, just solving \eqref{eq:ApproxProblem} with a large choice of $ t $ does not work out in general, since numerical issues can make convergence of Newton's Method dependent on the choice of the initial point $ \xnull $.
-\label{sec:approxMeasure}
+
+
+
+%OLD
+%argumenting with the Lagrangian and the Saddlepoint-theorem, one can show that the inequality
+%\[ \fnull (\xoptt) - \popt \leq \frac{m}{t}\] holds, where $ t $ is the parameter of the approximative indicator-function $ \ifcthat $ and $ m $ the number of inequality constraints as defined above. This means, that the optimum $ \xoptt $ approximated problem \eqref{eq:ApproxProblem} has an objective value $ \fnull(\xoptt) $ that is maximally by $ \frac{m}{t} $ larger (and hence worse) than the real optimal value $ \popt $ of the original problem. Thus, one can theoretically force a desired bound on the subobtimality $ \epsilon >0 $ by just choosing $ t $ large enough, in particular $ t := \frac{m}{\epsilon} $. However, just solving \eqref{eq:ApproxProblem} with a large choice of $ t $ does not work out in general, since numerical issues can make convergence of Newton's Method dependent on the choice of the initial point $ \xnull $.
+%\label{sec:approxMeasure}
 
 \subsection{Algorithmic Use of the Barrier Concept}
 As already mentioned in section \ref{sec:approxMeasure}, one can not in general solve  \eqref{eq:ApproxProblem} without a good guess at the initial value $ \xnull $. So how to make use of the barrier concept? The idea of interior methods is to find points along the problem's central path. Two methods are introduced in the following. Emphasis of the explanations as well as the implementation in \matlab \ will be on the Primal-Dual Interior Point Method.
@@ -101,10 +113,8 @@ problem \eqref{eq:ApproxProblem} into account. In particular Newton's method is 
 		\grad \fnull(x) &+ \sum_{i=1}^{m} \lambdai \grad f_i(x) + \sum_{i=1}^{p} \nu_i \grad h_i (x) = 0.
 		\end{align}
 	\end{subequations}
-
 \end{theorem}
 
-\todo write KKT cond.\\
 Stacked in one vector, this yields
 \begin{align}
 \begin{split}
@@ -250,9 +260,9 @@ For the purpose of optimizing a convex, twice differentiable objective function 
 
 
 
-Present main theorems/algorithm. Explain idea, explain algorithm, 
-provide a convergence proof, discuss main properties (advantages and disadvantages)
-%\begin{algorithm}
-%	
-%\end{algorithm}
-Use algorithm environment in Latex to present algorithm (pseudo-code)
+%Present main theorems/algorithm. Explain idea, explain algorithm, 
+%provide a convergence proof, discuss main properties (advantages and disadvantages)
+%%\begin{algorithm}
+%%	
+%%\end{algorithm}
+%Use algorithm environment in Latex to present algorithm (pseudo-code)
