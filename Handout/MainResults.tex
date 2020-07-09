@@ -1,6 +1,45 @@
-\todo define dual problem\\
+
 \todo call first algo barrier method\\
 \todo explain name interior point method. place at introductio of log barrier\\
+\todo make $ \R $ prettier\\
+
+\subsection{Newton's Method}
+\todo move to beginning
+Newton's method is an iterative process to solve nonlinear equation systems
+\begin{equation}
+\Fx= 0
+\end{equation}
+for a differentiable map $ F: \Rn \longrightarrow \Rm $. The idea of this algorithm is as follows: At a given point $ \xk $, the zero of the linear approximation of $ F $ around $ \xk $  is computed. This point is chosen as the next iterate $ \xkplus $. In particular, a linear approximation of $ F $ in  $ \xk $ is defined as
+\begin{equation}
+\Lx:= \Fxk + \jacFxk(x - \xk) \text{ for } x\in \Rn,
+\end{equation}
+where $ \jacFxk $ is the Jacobian of $ F $ at the point $ \xk $. If $ \jacFxk $ invertible, the point $ \xtil $ with $ L(\xtil)=0 $ is exactly the solution of  the linear equation $ \jacFxk x = -\Fx $.
+%Though Newton's method is in general not guaranteed to converge,  
+Technical conditions and proofs about convergence rates of Newton's method can be found in \cite{SO}.
+The procedure ececuting a Newton search is summarized in \eqref{alg:newton}.
+%TODO Newton algo angeben??
+\begin{algorithm}
+	\SetAlgoLined
+	\KwResult{$ \xtil $, approximate solution of nonlinear system of equalities $ \Fx = 0$, residual tolerance $ \epsres >0$, cauchy-tolerance $ \epscauchy >0 $}
+	\KwData{Function $ F: \Rn \longrightarrow \Rn $, initial point $ \xnull $}
+	\BlankLine
+	\While{$ \norm{x - \xlast} \geq \epscauchy $ or $ \norm{\Fx} \geq \epsres $}{
+		compute Newton direction $ \Delta x $ by solving $ \jac F(x) \Delta x = -F(x) $\;
+		remember last interation for checking term. crit. $ \xlast = x $\;
+		update current point by $ x = x +  \Delta x$\;
+	}
+	return $ \tilde{x} = x $\;
+	\caption{Newton's Method}
+	\label{alg:newton}
+\end{algorithm}
+\todo  newton decrement!!
+\begin{remark}
+	The residual and the cauchy-criterion for termination should be combined for the newton method. Easy examples are known, where one of the criteria is satisfied even though the current iteration is far from the optimal point. For details, see \cite{SO}.
+\end{remark}
+
+For the purpose of optimizing a convex, twice differentiable objective function $ \fnull $ we want to find a zero of the gradient $ \grad \fnull $. Therefore we can apply the Newton Method to solve the non-linear equation \[ \Fx := \vectortwo{\grad \fnull (x)}{g(x)} = 0 \qquad \text{with }  g(x) = \vectorthree{g_1(x)}{\vdots}{g_p(x)} \]. By convexity, satisfying $ \grad \fnull (\xopt) = 0$ is not only neccessary, but also sufficient for $ \xopt $ to be a global minimum of $ \fnull $.\\
+
+
 \subsection{Concept of Barrier Methods}
 Convex optimization Problems with no inequality constraints can  be solved efficiently by using Newton's method. If inequality constraints are involved, Newton's method can not guarantee feasibiliy of a found solution. It is hence desirable, to transform an inequality-constrained optimization problem into an only equality-constrained one. Therefore, we move the inequality constraints implicitley to the objective function.
 A simple and also precise way to do this, would be to evaluate an  indicator function  
@@ -98,7 +137,7 @@ By weak duality, this means, that the optimum $ \xoptt $ approximated problem \e
 
 \subsection{Algorithmic Use of the Barrier Concept}
 As already mentioned in section \ref{sec:approxMeasure}, one can not in general solve  \eqref{eq:ApproxProblem} without a good guess at the initial value $ \xnull $. So how to make use of the barrier concept? The idea of interior methods is to find points along the problem's central path. Two methods are introduced in the following. Emphasis of the explanations as well as the implementation in \matlab \ will be on the Primal-Dual Interior Point Method.
-\subsubsection{Interior Point Method with Full Newton Search}
+\subsubsection{Barrier Method}
 As mentioned before, for large $ t $ a good initial point $ \xnull $, meaning an initial point that is not far away from the actual minimum of \eqref{eq:OptProblem} is crucial for avoiding large numerical errors. This can be achieved by starting with optimization of \eqref{eq:ApproxProblem} for small $ t=t_1 $, which leads to a a rather bad approximation of the original problem, but also to better numerical behavior. After finding $ \xopt(t_1) $ via Newton's method, $ t $ is increased to $ t= t_2 > t_1 $ by a certain rate and  \eqref{eq:ApproxProblem} is solved again with parameter $ t = t_2 $, with choice $ \xnull = \xopt(t_1) $ for the initial point.
 %For step $ n $ of the algorithm call finding $ \xoptt $ the centering, or outer iteration, step of the algorithm and increasing $ t_n \mapsto t_{n+1} $ with setting $ \xnull :=  \xopt(t_n)$ an outer iteration.
 For step $ n $ of the algorithm call finding $ \xoptt $ the centering, and updating and updating $ t $ and $ \xoptt $ an outer iteration or centering point and a iteration of the newton algorithm within the centering step an inner iteration. The whole procedure is written in Algorithm \ref{alg:BarrierFullNewton}.
@@ -112,7 +151,7 @@ For step $ n $ of the algorithm call finding $ \xoptt $ the centering, and updat
 
 \begin{algorithm}
 		\SetAlgoLined
-		\SetKwComment{bla}{abc}{keks}
+%		\SetKwComment{bla}{abc}{keks}
 		\KwResult{$ \xoptt $, approximate solution of \eqref{eq:OptProblem} with $ \fnull(\xoptt) - \popt < \frac{m}{t} $ }
 		initialization: Matrices $ 0 \prec Q\in \R^{n \times n}, c\in \Rn. $ defining the objective function, matrices $ \Aeq\in \R^{m \times n}, \beq\in \Rp, \Aineq\R^{m\times n}, \bineq\in \Rm $ defining constraints, initial point $ x $, initial approximation parameter $ t > 0 $, rate for increasing appprox. param. $ \mu > 1 $ tolerance $ \epsilon $
 		\While{$\frac{m}{t} \geq \epsilon$}{
@@ -120,7 +159,7 @@ For step $ n $ of the algorithm call finding $ \xoptt $ the centering, and updat
 			Update $ x := \xoptt $\;
 			Increase $ t $ by $ t := \mu t $
 		}
-		\caption{Interior Point Method with full Newton search}
+		\caption{Barrier Method with full Newton search}
 		\label{alg:BarrierFullNewton}
 \end{algorithm}
 
@@ -177,7 +216,6 @@ Consequently, the Newton equality for finding the search direction $ \deltaxln $
 	 %\vectorthree{\rdual}{\rcent}{\rpri}.
 \end{align}
 with $ \bkkt = - \rmu. $
-\todo equality should fit in col.kl!\\
 
 Unfortunately, adding the obtained step direction $ \deltaxln $ to $ (x,\lambda,\nu) $, does not in general yield a feasible point. Therefore we compute a suitable step-size $ \sopt $ via a backtracking-linesearch, such that a certain decrease of the residual and feasibility is guaranteed for the next iteration point \[ \vectorthree{\xplus}{\lambdaplus}{\nuplus} = \xlnvec + \sopt  \vectorthree{\Delta x}{\Delta  \lambda}{\Delta \nu}.\]
 The detailed procedure of the backtracking linesearch is displayed in Algorithm \ref{alg:backtracking}.
@@ -265,41 +303,7 @@ that this bound holds uniformly for any parameter $ t $ for all problems \eqref{
  iterations to yield a result with a suboptimality of $ \epsilon $ or smaller. Detailed reasoning can be found in \cite{BV}, section 11.5.
 % CV 11.5
 
-\subsection{Newton's Method}
-\todo move to beginning
-Newton's method is an iterative process to solve nonlinear equation systems
-\begin{equation}
-\Fx= 0
-\end{equation}
-for a differentiable map $ F: \Rn \longrightarrow \Rm $. The idea of this algorithm is as follows: At a given point $ \xk $, the zero of the linear approximation of $ F $ around $ \xk $  is computed. This point is chosen as the next iterate $ \xkplus $. In particular, a linear approximation of $ F $ in  $ \xk $ is defined as
-\begin{equation}
-	\Lx:= \Fxk + \jacFxk(x - \xk) \text{ for } x\in \Rn,
-\end{equation}
-where $ \jacFxk $ is the Jacobian of $ F $ at the point $ \xk $. If $ \jacFxk $ invertible, the point $ \xtil $ with $ L(\xtil)=0 $ is exactly the solution of  the linear equation $ \jacFxk x = -\Fx $.
-%Though Newton's method is in general not guaranteed to converge,  
-Technical conditions and proofs about convergence rates of Newton's method can be found in \cite{SO}.
-The procedure ececuting a Newton search is summarized in \eqref{alg:newton}.
-%TODO Newton algo angeben??
-\begin{algorithm}
-	\SetAlgoLined
-	\KwResult{$ \xtil $, approximate solution of nonlinear system of equalities $ \Fx = 0$, residual tolerance $ \epsres >0$, cauchy-tolerance $ \epscauchy >0 $}
-	\KwData{Function $ F: \Rn \longrightarrow \Rn $, initial point $ \xnull $}
-	\BlankLine
-	\While{$ \norm{x - \xlast} \geq \epscauchy $ or $ \norm{\Fx} \geq \epsres $}{
-		compute Newton direction $ \Delta x $ by solving $ \jac F(x) \Delta x = -F(x) $\;
-		remember last interation for checking term. crit. $ \xlast = x $\;
-		update current point by $ x = x +  \Delta x$\;
-	}
-	return $ \tilde{x} = x $\;
-	\caption{Newton's Method}
-	\label{alg:newton}
-\end{algorithm}
-\todo  newton decrement!!
-\begin{remark}
-	The residual and the cauchy-criterion for termination should be combined for the newton method. Easy examples are known, where one of the criteria is satisfied even though the current iteration is far from the optimal point. For details, see \cite{SO}.
-\end{remark}
 
-For the purpose of optimizing a convex, twice differentiable objective function $ \fnull $ we want to find a zero of the gradient $ \grad \fnull $. Therefore we can apply the Newton Method to solve the non-linear equation \[ \Fx := \vectortwo{\grad \fnull (x)}{g(x)} = 0 \qquad \text{with }  g(x) = \vectorthree{g_1(x)}{\vdots}{g_p(x)} \]. By convexity, satisfying $ \grad \fnull (\xopt) = 0$ is not only neccessary, but also sufficient for $ \xopt $ to be a global minimum of $ \fnull $.\\
 
 
 

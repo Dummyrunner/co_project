@@ -100,6 +100,8 @@
 \newcommand{\xlast}{\ind{x}{last}}
 \newcommand{\Mkkt}{\ind{M}{KKT}}
 \newcommand{\bkkt}{\ind{b}{KKT}}
+\newcommand{\sumitom}{\sum_{i=1}^{m}}
+\newcommand{\sumitop}{\sum_{i=1}^{p}}
 \newcommand{\OptProblem}{
 	\begin{aligned}
 	& \underset{x}{\text{minimize}}
@@ -133,6 +135,14 @@
 		& & tf_0(x) + \phix \\
 		& \text{subject to}
 		& &\Aeq x = \beq.
+	\end{aligned}
+}
+\newcommand{\OptProblemDual}{
+	\begin{aligned}
+		& \underset{(\lambda,\nu)}{\text{maximize}}
+		& & g(\lambda,\nu) \\
+		& \text{subject to}
+		& & \lambda \geq 0, \nu \in \Rp\\
 	\end{aligned}
 }
 
@@ -186,17 +196,17 @@ to read it.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{INTRODUCTION}
 \todo
-Some general introducing sentences about the topic, motivation and relevance of problem/algorithm.
+%Some general introducing sentences about the topic, motivation and relevance of problem/algorithm.
+%
+%In this paper we give an introduction to the results presented in paper(s) \cite{Bro-14}.
+%
+%
+%
+%We present the problem statement (optimization problem)
+%the main results/algorithms, discuss the underlying ideas and illustrate the results 
+%by numerical simulations.
 
-In this paper we give an introduction to the results presented in paper(s) \cite{Bro-14}.
-
-
-
-We present the problem statement (optimization problem)
-the main results/algorithms, discuss the underlying ideas and illustrate the results 
-by numerical simulations.
-
-Notation. Define notation.
+Notation. Throughout this paper, we denote the Jacobian of a function $ f: \Rn \longrightarrow \Rm $, differentiated along direction $ v $, evaluated at point $ x\in  \Rn $ by $ \jac_v f(x) $. The index $ v $ is omitted, if it follows clearly from the context. For a collection of scalar valued functions $ h_i: \Rn \longrightarrow \R, i = 1,\dots,m $ with the same domain, we define \[ h(x) := \vectorthree{h_1(x)}{\vdots}{h_m(x)} \] for the stacked values of all $ h_i $ evaluated at $ x \in \Rn $.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{PROBLEM STATEMENT AND BACKGROUND}
