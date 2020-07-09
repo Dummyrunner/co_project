@@ -48,7 +48,6 @@ One can show, that solutions $ (\xoptt,\lambdaoptt,\nuoptt) $ of \eqref{eq:Appro
 \label{sec:BarrierConcept}
 \subsection{Measure for the Approximation's quality}
 An immediately arising question is, what conclusions about the solution $ (\xopt,\lambdaopt, \nuopt) $ of \eqref{eq:OptProblem} can be drawn from a knowing a solution of $ \eqref{eq:ApproxProblem} $ for a certain $ t>0 $ about the value $ \fnull(\xoptt) $  of a central point $ \xoptt $, compared with the optimal value $ \popt $ of the original problem. 
-By \todo show arguments?\\
 For compactness, we denote the barrier term of a the approximated problem as
 \[ \phix = - \sum_{i=1}^{m} \log(-f_i(x)),\] and keep in mind, that its Jacobian and Hessian are
 \begin{align*}
@@ -115,7 +114,7 @@ For step $ n $ of the algorithm call finding $ \xoptt $ the centering, and updat
 		\SetAlgoLined
 		\SetKwComment{bla}{abc}{keks}
 		\KwResult{$ \xoptt $, approximate solution of \eqref{eq:OptProblem} with $ \fnull(\xoptt) - \popt < \frac{m}{t} $ }
-		initialization: Matrices $ 0 \prec Q\in \R^{n \times n}, c\in \Rn. $ defining the objective function, matrices $ \Aeq, \beq, \Aineq, \bineq $ defining constraints, initial point $ x $, initial approximation parameter $ t > 0 $, rate for increasing appprox. param. $ \mu > 1 $ tolerance $ \epsilon $ \todo dimensions of constr. matrices\\
+		initialization: Matrices $ 0 \prec Q\in \R^{n \times n}, c\in \Rn. $ defining the objective function, matrices $ \Aeq\in \R^{m \times n}, \beq\in \Rp, \Aineq\R^{m\times n}, \bineq\in \Rm $ defining constraints, initial point $ x $, initial approximation parameter $ t > 0 $, rate for increasing appprox. param. $ \mu > 1 $ tolerance $ \epsilon $
 		\While{$\frac{m}{t} \geq \epsilon$}{
 			Compute $ \xoptt $ by solving $ \eqref{eq:ApproxProblem} $ via Newton's Method, starting at $ x $\;
 			Update $ x := \xoptt $\;
@@ -145,33 +144,40 @@ problem \eqref{eq:ApproxProblem} into account. In particular Newton's method is 
 	\end{subequations}
 \end{theorem}
 
-Stacked in one vector, this yields
+Stacked in one vector, this yields the system of equalities
 \begin{align}
 \begin{split}
 \label{eq:KKTres}
-	 F(x,\lambda,\nu) :&= \rmu = \vectorthree{\rdual}{\rcent}{\rpri}\\ &= \vectorthree{\grad \fnull(x) + \jac \fx \trp \lambda + \Aeq \trp \nu}{-\diag(\lambda)\fx - \mu \ones}{\Aeq x - \beq} = 0.
+%	 F_t(x,\lambda,\nu) :&=
+	 \rmu &= \vectorthree{\rdual}{\rcent}{\rpri} \\&= \vectorthree{\grad \fnull(x) + \jac \fx \trp \lambda + \Aeq \trp \nu}{-\diag(\lambda)\fx - \mu \ones}{\Aeq x - \beq} \overset{!}{=} 0.
 \end{split}
 \end{align}
+\todo notation jacobi subscript\\
 to apply Newton on. For formulation of the linear Newton equality, we also compute  the jacobian
 \begin{align}
-	\frac{\mathrm{d} \; ( \rmu)}{\mathrm{d} (x,\lambda,\nu)\trp} = 
-	\begin{pmatrix}
+%	\frac{\mathrm{d} \; ( \rmu)}{\mathrm{d} (x,\lambda,\nu)\trp}\\ &= 
+	&\jac_{(x,\lambda,\nu)} \rmu\\ &= 
+	\underbrace{\begin{pmatrix}
 		\hessfnull + \sum_{i = 1}^{m} \lambdai \hessfi & \jac \fx & \Aeq \trp\\
 		-\diag(\lambda) \jac \fx & -\diag(\fx) & 0\\
 		\Aeq & 0 & 0
-	\end{pmatrix}
+		\end{pmatrix}}_{:= \Mkkt}	
 \end{align}
-of the residual. 
-Consequently, the Newton equality for finding the search direction $ \deltaxln $ in each newton step is exactly
+of the residual and denote it as $ \Mkkt $. 
+Consequently, the Newton equality for finding the search direction $ \deltaxln $ in each newton step is obtained by solving the linear equation
 \begin{align}
 \label{eq:rmuNewtonEq}
-		\begin{pmatrix}
-	\hessfnull + \sum_{i = 1}^{m} \lambdai \hessfi & \jac \fx & \Aeq \trp\\
-	-\diag(\lambda) \jac \fx & -\diag(\fx) & 0\\
-	\Aeq & 0 & 0
-	\end{pmatrix} \vectorthree{\Delta x}{\Delta \lambda}{\Delta \nu} = - \vectorthree{\rdual}{\rcent}{\rpri}.
-\end{align}(
-\todo equality should fit in col.!\\
+%		\begin{pmatrix}
+%	\hessfnull + \sum_{i = 1}^{m} \lambdai \hessfi & \jac \fx & \Aeq \trp\\
+%	-\diag(\lambda) \jac \fx & -\diag(\fx) & 0\\
+%	\Aeq & 0 & 0
+%	\end{pmatrix}
+\Mkkt
+	 \vectorthree{\Delta x}{\Delta \lambda}{\Delta \nu} = \bkkt
+	 %\vectorthree{\rdual}{\rcent}{\rpri}.
+\end{align}
+with $ \bkkt = - \rmu. $
+\todo equality should fit in col.kl!\\
 
 Unfortunately, adding the obtained step direction $ \deltaxln $ to $ (x,\lambda,\nu) $, does not in general yield a feasible point. Therefore we compute a suitable step-size $ \sopt $ via a backtracking-linesearch, such that a certain decrease of the residual and feasibility is guaranteed for the next iteration point \[ \vectorthree{\xplus}{\lambdaplus}{\nuplus} = \xlnvec + \sopt  \vectorthree{\Delta x}{\Delta  \lambda}{\Delta \nu}.\]
 The detailed procedure of the backtracking linesearch is displayed in Algorithm \ref{alg:backtracking}.
@@ -181,7 +187,7 @@ The detailed procedure of the backtracking linesearch is displayed in Algorithm 
 		\KwResult{Stepsize $ \sopt $, s.t. $ \lambdaplus > 0, f(\xplus) < 0  $ and $ r_\mu $ decreases by certain amount.  }
 		\KwData{
 		 Problem matrices, current $ x,\lambda,\nu $, Newton direction $ \Delta x,\Delta \lambda, \Delta \nu $, barrier parameter $ \mu $, backtracking parameters $ \alpha \geq 0, \beta \in (0,1) $. 
-		Initial step-size $ \smax := \min \{ 1, \min_{i|\Delta \lambdai<0} -\lambdai / \Delta \lambdai \}$ }
+		Initial step-size set $ \smax = \min \{ 1, \min_{i|\Delta \lambdai<0} -\lambdai / \Delta \lambdai \}$ }
 		\BlankLine
 			compute $ \rmu $\;
 			$ s = \smax $\;
@@ -261,7 +267,7 @@ that this bound holds uniformly for any parameter $ t $ for all problems \eqref{
 
 \subsection{Newton's Method}
 \todo move to beginning
-Newton's method is an iterative process to solve nonlinear equality systems
+Newton's method is an iterative process to solve nonlinear equation systems
 \begin{equation}
 \Fx= 0
 \end{equation}
@@ -269,7 +275,7 @@ for a differentiable map $ F: \Rn \longrightarrow \Rm $. The idea of this algori
 \begin{equation}
 	\Lx:= \Fxk + \jacFxk(x - \xk) \text{ for } x\in \Rn,
 \end{equation}
-where $ \jacFxk $ is the Jacobian of $ F $ at the point $ \xk $. If $ \jacFxk $ invertible, the point $ \xtil $ with $ L(\xtil)=0 $ is exactly the solution of  the linear equality $ \jacFxk x = -\Fx $.
+where $ \jacFxk $ is the Jacobian of $ F $ at the point $ \xk $. If $ \jacFxk $ invertible, the point $ \xtil $ with $ L(\xtil)=0 $ is exactly the solution of  the linear equation $ \jacFxk x = -\Fx $.
 %Though Newton's method is in general not guaranteed to converge,  
 Technical conditions and proofs about convergence rates of Newton's method can be found in \cite{SO}.
 The procedure ececuting a Newton search is summarized in \eqref{alg:newton}.
