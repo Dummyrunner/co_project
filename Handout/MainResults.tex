@@ -1,9 +1,7 @@
 
-\todo explain name interior point method. place at introductio of log barrier\\
 \todo make $ \R $ prettier\\
 
 \subsection{Newton's Method}
-\todo move to beginning
 Newton's method is an iterative process to solve nonlinear equation systems
 \begin{equation}
 \Fx= 0
@@ -16,7 +14,7 @@ where $ \jacFxk $ is the Jacobian of $ F $ at the point $ \xk $. If $ \jacFxk $ 
 %Though Newton's method is in general not guaranteed to converge,  
 Technical conditions and proofs about convergence rates of Newton's method can be found in \cite{SO}.
 The procedure ececuting a Newton search is summarized in \eqref{alg:newton}.
-%TODO Newton algo angeben??
+
 \begin{algorithm}
 	\SetAlgoLined
 	\KwResult{$ \xtil $, approximate solution of nonlinear system of equalities $ \Fx = 0$, residual tolerance $ \epsres >0$, cauchy-tolerance $ \epscauchy >0 $}
@@ -31,9 +29,11 @@ The procedure ececuting a Newton search is summarized in \eqref{alg:newton}.
 	\caption{Newton's Method}
 	\label{alg:newton}
 \end{algorithm}
-\todo  newton decrement!!
-\begin{remark}
+%\todo  newton decrement!!>?
+%TODO
+\begin{remark}\label{re:newtonStop}
 	The residual and the cauchy-criterion for termination should be combined for the newton method. Easy examples are known, where one of the criteria is satisfied even though the current iteration is far from the optimal point. For details, see \cite{SO}.
+	For theoretical reasoining, or if $ \grad^2 f(x)^{-1} $ can be used explicitely, one can also use the decreasement of $ \lambda^2 = \grad \fx \trp \grad^2 f(x)^{-1} \grad f(x)$ (so called newton-decrement) under a certain tolerance.
 \end{remark}
 
 For the purpose of optimizing a convex, twice differentiable objective function $ \fnull $ we want to find a zero of the gradient $ \grad \fnull $. Therefore we can apply the Newton Method to solve the non-linear equation \[ \Fx := \vectortwo{\grad \fnull (x)}{g(x)} = 0 \qquad \text{with }  g(x) = \vectorthree{g_1(x)}{\vdots}{g_p(x)} \]. By convexity, satisfying $ \grad \fnull (\xopt) = 0$ is not only neccessary, but also sufficient for $ \xopt $ to be a global minimum of $ \fnull $.\\
@@ -78,14 +78,14 @@ approximation
 & & \Aeq x - \beq = 0
 \end{aligned} \label{eq:ApproxProblem}
 \end{equation}
-of problem \eqref{eq:OptProblem}.
+of problem \eqref{eq:OptProblem}. Throughout this paper, we denote its  Lagrangian by $ L_t: \Rn \times \Rp \longrightarrow \R $.
 
 Note, that $ \frac{1}{t}\log(-u) $ is convex, increasing in $ u $, and differentiable on the feasible set. Hence the entire function $ \sum_{i=1}^{m} \ifcthat(f_i(x)) $ is convex and \eqref{eq:ApproxProblem} is a convex Problem with differentiable objective function. These properties allow us to solve $ \eqref{eq:ApproxProblem} $ computationally.
-We call an optimal point $ \xopt(t) $ of \eqref{eq:ApproxProblem} with parameter $ t $  a central point and a solution to its dual problem $ (\lambdaopt(t),\nuopt(t)) $ a dual central point. The set of (dual) solutions of \eqref{eq:ApproxProblem} for all $ t>0 $ we call the (dual) central path.
-One can show, that solutions $ (\xoptt,\lambdaoptt,\nuoptt) $ of \eqref{eq:ApproxProblem} converge to the solution  $ (\xopt,\lambdaopt, \nuopt) $ of \eqref{eq:OptProblem} for $ t  \longrightarrow 0 $. The proof is shown in \cite{BV}.
+We call an optimal point $ \xopt(t) $ of \eqref{eq:ApproxProblem} with parameter $ t $  a central point and a solution to its dual problem $ (\lambdaopt(t),\nuopt(t)) $ a dual central point. The set of (dual) solutions of \eqref{eq:ApproxProblem} for all $ t>0 $ we call the (dual) central path. Since for points $ x $ with $ f_i(x) = 0 $ for any $ x \in \{1,\dots,m \} $, the objective of \eqref{eq:ApproxProblem} is $ \infty $, all central points are in the interior of the set, satisfying the inequality constraints of \eqref{eq:OptProblem}. Thus the name interior point method comes up for this framework.
+One can show, that solutions $ (\xoptt,\lambdaoptt,\nuoptt) $ of \eqref{eq:ApproxProblem} converge to the solution  $ (\xopt,\lambdaopt, \nuopt) $ of \eqref{eq:OptProblem} for $ t  \longrightarrow 0 $. The proof can be found in \cite{BV}.
 \label{sec:BarrierConcept}
 \subsection{Measure for the Approximation's quality}
-An immediately arising question is, what conclusions about the solution $ (\xopt,\lambdaopt, \nuopt) $ of \eqref{eq:OptProblem} can be drawn from a knowing a solution of $ \eqref{eq:ApproxProblem} $ for a certain $ t>0 $ about the value $ \fnull(\xoptt) $  of a central point $ \xoptt $, compared with the optimal value $ \popt $ of the original problem. 
+An immediately arising question is, what conclusions about the solution $ (\xopt,\lambdaopt, \nuopt) $ of \eqref{eq:OptProblem} can be drawn from knowing a solution of $ \eqref{eq:ApproxProblem} $ for a certain $ t>0 $ about the value $ \fnull(\xoptt) $  of a central point $ \xoptt $, compared with the optimal value $ \popt $ of the original problem. 
 For compactness, we denote the barrier term of a the approximated problem as
 \[ \phix = - \sum_{i=1}^{m} \log(-f_i(x)),\] and keep in mind, that its Jacobian and Hessian are
 \begin{align*}
@@ -98,7 +98,7 @@ For the sake of simplifying notation, throughout this section we consider the pr
 \end{equation}
 that is obtained by multiplying the objective in \eqref{eq:ApproxProblem} with $ t>0 $. The original and the obtained problem are equvialent.
 For an arbitrary central point $ \xoptt $ we know, that $ \xoptt $ is a strictly feasible point of \eqref{eq:OptProblem}. Since $ \xoptt $ solves \eqref{eq:ApproxProblemMult}, there exists $ \nuhat \in \Rp$, such that\\
-\todo define $ L_t $ as gradient for approx problem\\
+%\todo define $ L_t $ as gradient for approx problem\\
 \todo check consistency
 \begin{align}
 	\grad L_t(\xoptt, \nuhat) &= t \grad \fnull(\xoptt) + \grad \phi(\xoptt) + \Aeq \trp \nuhat\\
@@ -134,7 +134,7 @@ The second of the three summands adds up to $ m\cdot 1 $, because by the particu
 
 
 By weak duality, this means, that the optimum $ \xoptt $ approximated problem \eqref{eq:ApproxProblem} has an objective value $ \fnull(\xoptt) $ that is maximally by $ \frac{m}{t} $ larger (and hence worse) than the real optimal value $ \popt $ of the original problem. Thus, one can theoretically force a desired bound on the subobtimality $ \epsilon >0 $ by just choosing $ t $ large enough, in particular $ t := \frac{m}{\epsilon} $. However, just solving \eqref{eq:ApproxProblem} with a large choice of $ t $ does not work out in general, since numerical issues can make convergence of Newton's Method dependent on the choice of the initial point $ \xnull $.
-%\label{sec:approxMeasure}
+\label{sec:approxMeasure}
 
 \subsection{Algorithmic Use of the Barrier Concept}
 As already mentioned in section \ref{sec:approxMeasure}, one can not in general solve  \eqref{eq:ApproxProblem} without a good guess at the initial value $ \xnull $. So how to make use of the barrier concept? The idea of interior methods is to find points along the problem's central path. Two methods are introduced in the following. Emphasis of the explanations as well as the implementation in \matlab \ will be on the Primal-Dual Interior Point Method.
@@ -291,7 +291,7 @@ The upper bound
 \begin{equation} % BV 9
 	\frac{\fx - \popt}{\gamma} + c
 \end{equation}
-on the maximal number of newton iterations that is needed to get a newton decrement smaller than $ \epsnt $, while $ c $ depends on $  \epsnt $ by $ \log_2 \log_2(1/\epsnt) $, $ \popt $ is the primal problem's  optimal value and $ \gamma $ depends on choice of the backtracking parameters $ \alpha, \beta $ with\[ \frac{1}{\gamma} = \frac{20-8\alpha}{\alpha \beta (1-2\alpha)^2}.\]
+on the maximal number of newton iterations that is needed to get a newton decrement (see remark \ref{re:newtonStop}) smaller than $ \epsnt $, while $ c $ depends on $  \epsnt $ by $ \log_2 \log_2(1/\epsnt) $, $ \popt $ is the primal problem's  optimal value and $ \gamma $ depends on choice of the backtracking parameters $ \alpha, \beta $ with\[ \frac{1}{\gamma} = \frac{20-8\alpha}{\alpha \beta (1-2\alpha)^2}.\]
 The derivation of this bound is shown in \cite{BV}, section 9.
 
  One can show,
