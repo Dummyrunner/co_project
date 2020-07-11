@@ -1,4 +1,4 @@
-function [Q,c,Aineq,bineq,Aeq,beq] = mpcZTC2quadprog(Ad,Bd,Q,R,delta,N,xinit,xnormbound,unormbound)
+function [H,c,Aineq,bineq,Aeq,beq] = mpcZTC2quadprog(Ad,Bd,Q,R,delta,N,xinit,xnormbound,unormbound)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 %   reprasing ztc mpc at time t, horizon N samples
@@ -14,11 +14,11 @@ Rblk = blkdiag(Rs{:});
 H = delta.*blkdiag(Qblk,zeros(n),Rblk);
 
 % express box constraints for pred. state and input in inequality constr.
-Aineq = [xnormbound.*eye(n) zeros(n,m);...
-         -xnormbound.*eye(n) zeros(n,m);...
-         zeros(m,n) unormbound.*eye(m);...
-         zeros(m,n) -unormbound.*eye(m)];
-bineq = ones(2*(n+m));
+Aineq = [xnormbound.*eye(n*(N+1)) zeros(n*(N+1),m*N);...
+         -xnormbound.*eye(n*(N+1)) zeros(n*(N+1),m*N);...
+         zeros(m*N,n*(N+1)) unormbound.*eye(m*N);...
+         zeros(m*N,n*(N+1)) -unormbound.*eye(m*N)];
+bineq = ones(2*(n*(N+1) + m*N),1);
 
 % express system dynamics and init. cond. in equality constr.
 Aeqx = kron(eye(N+1),eye(n));  Aeqx(1:n,1:n) = -1.*Aeqx(1:n,1:n);
@@ -32,6 +32,6 @@ beq = [xinit; zeros(N*m,1)];
 
 Aeq = blkdiag(Aeqx,Aequ);
 
-c = 0;
+c = zeros(n,1);
 end
 
