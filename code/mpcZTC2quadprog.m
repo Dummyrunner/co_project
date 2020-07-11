@@ -1,4 +1,4 @@
-function [Q,c,Aineq,bineq,Aeq,beq] = mpcZTC2quadprog(Ad,Bd,Q,R,delta,N,xinit)
+function [Q,c,Aineq,bineq,Aeq,beq] = mpcZTC2quadprog(Ad,Bd,Q,R,delta,N,xinit,xnormbound,unormbound)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 %   reprasing ztc mpc at time t, horizon N samples
@@ -12,9 +12,6 @@ H = zeros(N*(n+m)+n);
 Qblk = blkdiag(Qs{:});
 Rblk = blkdiag(Rs{:});
 H = delta.*blkdiag(Qblk,zeros(n),Rblk);
-
-xnormbound = 1; %transfer to arguments
-unormbound = 1;
 
 % express box constraints for pred. state and input in inequality constr.
 Aineq = [xnormbound.*eye(n) zeros(n,m);...
