@@ -29,5 +29,9 @@ Aeqx = [Aeqx; kron(lastrow,eye(n))];
 Aequ = kron(eye(N),Bd);
 Aequ = [zeros(N,N*m); Aequ];
 beq = [xinit; zeros(N*m,1)];
+
+Aeq = blkdiag(Aeqx,Aequ);
+
+c = 0;
 end
 
