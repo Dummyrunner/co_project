@@ -60,7 +60,7 @@ while found == 0
     nu_new = nu + s.*deltanu;
     r_new = res_kkt(x_new,lambda_new,nu_new,Q,c,Aineq,bineq,Aeq,beq,mu_barrier);
     r_old = res_kkt(x,lambda,nu,Q,c,Aineq,bineq,Aeq,beq,mu_barrier);
-    if (Aineq*x_new - bineq < 0) && (norm(r_new) <= (1-ls_alpha*s)*norm(r_old))
+    if all(Aineq*x_new - bineq < 0) && (norm(r_new) <= (1-ls_alpha*s)*norm(r_old))
         found = 1;
     end
 end
