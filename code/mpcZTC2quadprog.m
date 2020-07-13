@@ -21,10 +21,11 @@ bineq = ones(2*(n*(N+1) + m*N),1);
 
 % express system dynamics and init. cond. in equality constr.
 Aeqx = kron(eye(N+1),eye(n));
-Aeqx(1:n,1:n) = -1.*Aeqx(1:n,1:n);
+Aeqx(n+1:end,n+1:end) = -1.*Aeqx(n+1:end,n+1:end);
 Aeqx = Aeqx + kron(diag(ones(N,1),-1),Ad);
 lastrow = zeros(1,N+1); lastrow(end) = 1;
 Aeqx = [Aeqx; kron(lastrow,eye(n))];
+
 
 Aequ = kron(eye(N),Bd);
 Aequ = [zeros(n,N*m); Aequ; zeros(n,N*m)];
