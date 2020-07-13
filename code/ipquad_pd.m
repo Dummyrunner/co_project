@@ -37,15 +37,16 @@ p = size(Aeq,1);
 
 % TODO init dual variables if not passed to the algo. HOW?
 found = 0;
+count = 0;
 
-while found == false
+while found == 0
     % compute surrogate duality gap
     eta = -(Aineq*x - bineq)'*lambda;
     mu_barrier = gamma*eta/m;
     % Compute KKT residual vector
     r_mu = res_kkt(x,lambda,nu,Q,c,Aineq,bineq,Aeq,beq,mu_barrier);
     r_dual = r_mu(1:m);
-    r_cent = r_mu((m+1):(m+p));
+%     r_cent = r_mu((m+1):(m+p));
     r_pri = r_mu((m+p+1):(m+p+n));
     
     if norm(r_pri) <= eps_feas && norm(r_dual) <= eps_feas && eta <= eps_opt
@@ -58,6 +59,9 @@ while found == false
         % compute search vector
         [x, lambda, nu] = newtonquad_pd(Q, c, Aineq, bineq, Aeq, beq, ls_alpha, ls_beta, x,lambda, nu, mu_barrier);
     end
+    count = count+1;
+    
+    disp(['Iteration No. ',num2str(count)])
 end
 
 
