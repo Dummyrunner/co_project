@@ -10,6 +10,7 @@ Bc = [0;1];
 Cc = eye(2);
 
 m = size(Bc, 2);
+n = size(Ac, 2);
 
 sysc = ss(Ac,Bc,Cc,0);
 Q = diag([0.5 0.5]);
@@ -24,8 +25,7 @@ sysd = c2d(sysc, delta, 'zoh');
           
 % uinit = zeros(size(Bc,2));
 % xtilde_init = [xt; uinit];
-lambda0 = arrayfun(@(x) -1/x, Aineq*[xtilde_init] - bineq);
-nu0 = 0;
+
 
 % linesearch parameters
 ls_alpha = 0.05;
@@ -39,6 +39,9 @@ xtilde_init = [u0;x0];
 
 [H,c,Aineq,bineq,Aeq,beq] = ...
               mpcZTC2quadprog(Ad,Bd,Q,R,delta,N,xtilde_init,xnormbound,unormbound);
+          
+lambda0 = arrayfun(@(x) -1/x, Aineq*[xtilde_init] - bineq);
+nu0 = 0;
 % decreasement of mu and tolerances
 gamma = .1;
 eps_feas = 1e-4;
