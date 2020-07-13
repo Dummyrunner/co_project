@@ -1,4 +1,4 @@
-function [H,c,Aineq,bineq,Aeq,beq] = mpcZTC2quadprog(Ad,Bd,Q,R,delta,N,xinit,xnormbound,unormbound)
+function [H,c,Aineq,bineq,Aeq,beq] = mpcZTC2quadprog(Ad,Bd,Q,R,delta,N,xt,xnormbound,unormbound)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 %   reprasing ztc mpc at time t, horizon N samples
@@ -8,7 +8,6 @@ m = size(Bd,2);
 % Build Matrix H
 Qs = repmat({Q},N,1);
 Rs = repmat({R},N,1);
-H = zeros(N*(n+m)+n);
 Qblk = blkdiag(Qs{:});
 Rblk = blkdiag(Rs{:});
 H = delta.*blkdiag(Qblk,zeros(n),Rblk);
@@ -29,13 +28,11 @@ Aeqx = [Aeqx; kron(lastrow,eye(n))];
 
 Aequ = kron(eye(N),Bd);
 Aequ = [zeros(n,N*m); Aequ; zeros(n,N*m)];
-% Aequ = [Aequ; zeros(n,N*m)];
 
-beq = [xinit; zeros(N*n,1)];
+beq = [xt; zeros((N+1)*n,1)];
 
-% Aeq = blkdiag(Aeqx,Aequ); %WRONG!!
 Aeq = [Aeqx Aequ];
 
-c = zeros(n,1);
+c = zeros(N*(m+n)+n,1);
 end
 
