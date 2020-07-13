@@ -27,7 +27,7 @@ p = size(Aeq,1);
 % Define Matrices for KKT-equality M_kkt*deltar = b_kkt
 M_kkt =  [Q                        Aineq'                  Aeq';...
     -diag(lambda)*Aineq     -diag(Aineq*x-bineq)      zeros(m,p);
-    Aeq                     zeros(p,m)              zeros(m,p) ];
+    Aeq                     zeros(p,m)              zeros(p,p) ];
 
 b_kkt = -res_kkt(x,lambda,nu,Q,c,Aineq,bineq,Aeq,beq,mu_barrier);
 
@@ -60,7 +60,7 @@ while found == 0
     nu_new = nu + s.*deltanu;
     r_new = res_kkt(x_new,lambda_new,nu_new,Q,c,Aineq,bineq,Aeq,beq,mu_barrier);
     r_old = res_kkt(x,lambda,nu,Q,c,Aineq,bineq,Aeq,beq,mu_barrier);
-    if (Aineq*x_new - bineq < 0) && norm(r_new) <= (1-ls_alpha*s)*norm(r_old)
+    if (Aineq*x_new - bineq < 0) && (norm(r_new) <= (1-ls_alpha*s)*norm(r_old))
         found = 1;
     end
 end
