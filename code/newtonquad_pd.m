@@ -25,9 +25,14 @@ p = size(Aeq,1);
 % nu = r((n+m+1):(n+m+p));
 
 % Define Matrices for KKT-equality M_kkt*deltar = b_kkt
-M_kkt =  [Q                        Aineq'                  Aeq';...
-    -diag(lambda)*Aineq     -diag(Aineq*x-bineq)      zeros(m,p);
-    Aeq                     zeros(p,m)              zeros(p,p) ];
+if ~isempty(Aeq)
+    M_kkt =  [Q                        Aineq'                  Aeq';...
+        -diag(lambda)*Aineq     -diag(Aineq*x-bineq)      zeros(m,p);
+        Aeq                     zeros(p,m)              zeros(p,p) ];
+else
+    M_kkt =  [Q                        Aineq';
+        -diag(lambda)*Aineq     -diag(Aineq*x-bineq)];
+end
 
 b_kkt = -res_kkt(x,lambda,nu,Q,c,Aineq,bineq,Aeq,beq,mu_barrier);
 
@@ -64,6 +69,6 @@ while found == 0
         found = 1;
     end
 end
-
+disp(['Backtracking search yields step size s = ',num2str(s)])
 end
 
