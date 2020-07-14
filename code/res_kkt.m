@@ -15,11 +15,15 @@ function r = res_kkt(x,lambda,nu,Q,c,Aineq,bineq,Aeq,beq,mu_barrier)
 
 m = size(Aineq,1);
 if ~isempty(Aeq)
+    % if there are equality constraints
     r = ...
         [Q*x + c + Aineq'*lambda + Aeq'*nu;...
         -diag(lambda)*(Aineq*x - bineq) - mu_barrier.*ones(m,1);...
         Aeq*x - beq];
 else
+    % If there are no equality constraints
     r = [Q*x + c + Aineq'*lambda;...
         -diag(lambda)*(Aineq*x - bineq) - mu_barrier.*ones(m,1)];   
+end
+
 end
