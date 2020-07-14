@@ -47,11 +47,14 @@ deltanu = deltaxln((n+m+1):(n+m+p));
 % Perform Backtracking linesearch for determining suitable step size
 
 % compute maximal step size smax
-lambdaquot = -lambda./deltalambda;
-% eliminate zeros and entries with deltalambda greater or equal zero
-lambdaquot = lambdaquot - (deltalambda >= 0).*lambdaquot;
-lambdaquot(lambdaquot == 0) = [];
-smax = min([1 ; lambdaquot]);
+lambdaquot = [];
+for i = 1:length(lambda)
+    if deltalambda(i) <0
+        lambdaquot = [lambdaquot, -lambda(i)/deltalambda(i)];
+    end
+end
+
+smax = min([1  lambdaquot]);
 
 % Backtracking-Linesearch
 % Typical Parameter choices:
