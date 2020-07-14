@@ -44,6 +44,6 @@ eps_feas = 1e-3;
 eps_opt = 1e-3;
 
 tic
-res = quadprog(H,c,Aineq, bineq, Aeq, beq)
-% ipquad_pd(H,c,Aineq,bineq,Aeq,beq,xtilde_init,lambda0,nu0,gamma,eps_feas,eps_opt,ls_alpha,ls_beta)
+% res = quadprog(H,c,Aineq, bineq, Aeq, beq);
+ipquad_pd(H,c,Aineq,bineq,Aeq,beq,xtilde_init,lambda0,nu0,gamma,eps_feas,eps_opt,ls_alpha,ls_beta)
 toc
