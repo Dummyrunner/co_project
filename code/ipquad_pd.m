@@ -61,7 +61,7 @@ while found == 0
     end
     count = count+1;
     
-    disp(['Iteration No. ',num2str(count)])
+    disp(['Iteration No. ',num2str(count),'; current norm of residual: ',num2str(norm([x;lambda;nu])),';  eta = ',num2str(eta)])
 end
 
 
