@@ -5,7 +5,7 @@ Aineq = [-2 -3; -1 0; 0 -1]; bineq = [-4;0;0];
 Aeq = []; beq = [];
 
 % Matrices defining objective
-Q = [3 1; 1 1];
+Q = 2.*[3 1; 1 1];
 c = [1; 6];
 
 %  m,p = 1
@@ -22,7 +22,7 @@ eps_opt = 1e-4;
 
 % initial primal dual point
 x0 = [1;1];
-lambda0 = [-0.2;-1; -1];
+lambda0 = [0.2;1; 1];
 nu0 = 0;
 
 [x,fval,lambda,nu,eta] = ipquad_pd(Q,c,Aineq,bineq,Aeq,beq,x0,lambda0,nu0,gamma,eps_feas,eps_opt,ls_alpha,ls_beta)
