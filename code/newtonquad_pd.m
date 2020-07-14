@@ -48,7 +48,9 @@ deltanu = deltaxln((n+m+1):(n+m+p));
 
 % compute maximal step size smax
 lambdaquot = -lambda./deltalambda;
-lambdaquot = lambdaquot + (deltalambda >= 0).*lambdaquot;
+% eliminate zeros and entries with deltalambda greater or equal zero
+lambdaquot = lambdaquot - (deltalambda >= 0).*lambdaquot;
+lambdaquot(lambdaquot == 0) = [];
 smax = min([1 ; lambdaquot]);
 
 % Backtracking-Linesearch
@@ -56,8 +58,6 @@ smax = min([1 ; lambdaquot]);
 % alpha in [0.01,0.1]; beta in [0.3,0.8]
 s = 0.99*smax; %S4 0.99 smax??
 found = 0;
-
-
 while found == 0
     s = s*ls_beta;
     x_new = x + s.*deltax;
