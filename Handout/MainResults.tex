@@ -36,7 +36,7 @@ The procedure executing a Newton search is summarized in \eqref{alg:newton}.
 	For theoretical reasoning, or if $ \grad^2 f(x)^{-1} $ can be used explicitely, one can also use the decreasement of $ \lambda^2 = \grad \fx \trp \grad^2 f(x)^{-1} \grad f(x)$ (so called newton-decrement) under a certain tolerance.
 \end{remark}
 
-For the purpose of optimizing a convex, twice differentiable objective function $ \fnull $ we want to find a zero of the gradient $ \grad \fnull $. Therefore we can apply the Newton Method to solve the non-linear equation \[ \Fx := \vectortwo{\grad \fnull (x)}{g(x)} = 0 \qquad \text{with }  g(x) = \vectorthree{g_1(x)}{\vdots}{g_p(x)} \]. By convexity, satisfying $ \grad \fnull (\xopt) = 0$ is not only neccessary, but also sufficient for $ \xopt $ to be a global minimum of $ \fnull $.\\
+For the purpose of optimizing a convex, twice differentiable objective function $ \fnull $ we want to find a zero of the gradient $ \grad \fnull $. Therefore we can apply the Newton Method to solve the non-linear equation \[ \Fx := \vectortwo{\grad \fnull (x)}{g(x)} = 0. \] By convexity, satisfying $ \grad \fnull (\xopt) = 0$ is not only neccessary, but also sufficient for $ \xopt $ to be a global minimum of $ \fnull $.\\
 
 
 \subsection{Concept of Barrier Methods}
