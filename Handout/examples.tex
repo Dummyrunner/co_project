@@ -1,0 +1,26 @@
+Quadratic optimization problems are arising in practical applications frequently. To pick one example, we here present the application of interior methods on a \mpclong \ (\mpc) problem. More precisely, a \mpc of a linear system with zero terminal constraint (ZTC).
+
+\subsection{Problem description \mpc}
+We consider the discrete time linear system
+\begin{align}
+	\xkplus = \Ad \xk + \Bd \uk, \label{eq:dynsys}
+\end{align}
+where $ \xk \in \Rn, \uk \in \Rm $ for all $ k \in  \N_0$, with the constraints that $ \normmax{\uk} \leq \boundu$
+and $ \normmax{\xk} \leq \boundx $ for all steps $ k\in \N_0 $. Further we assume that \eqref{eq:dynsys} has an equilibrium in $ x = 0 $ and the current state $ \xnull $ is gien. The maximum-norm is defined as the maximum absolute value over all entries of the vector, $\normmax{x} = \max_{1\leq i\leq n } |x_i| $.
+Goal is to find a input signal that steers the internal state $ x $ to zero, while additionally keeping $ u $ as small as possibly. Therefore, we consider the next $ N \in \N $ timesteps. We call $ N $ the prediction horizon.
+This leads to optimization of a certain objective function over all possible predicted steering signals $ \ubar = ({\ubar_1},{\dots},{\ubar_{N-1}})\trp $. We simulate the system for the next $ N $ timestep, hence we consider the sequence of states arising from applying a predicted sequence of input signals $ \ubar $. The sequence of predicted states we denote as $ (\xnullbar,\dots,\xbar_N)\trp $.
+We choose the quadratic objective function \[ \delta \sum_{k = 0}^{N-1} \underbrace{\xbark\trp Q \xbark }_{=: \norm{\xbark}_Q}+ \underbrace{\ubark \trp R \ubark}_{=:\norm{\ubark}_R}\] under the condition, that $ \xbar_N $, the last state in the predicted time, equals zero. 
+to minimize. The regarding predicted states directly follow from the system dynamics, in particular
+\[ \xbar_{k+1} = \Ad \xbark + \Bd \ubark. \]
+This setup we can summarize as an optimization problem
+\begin{equation}
+	\begin{aligned}
+	& \underset{\ubar=(\ubar_0,\dots,\ubar_{N-1})\trp}{\text{minimize}}
+	& & \sum_{k = 1}^{N-1} \norm{\xbark}_Q + \norm{\xbark}_R\\
+	& \text{subject to}
+	& & \xbar_0 = x_0,\\
+	& & &\xbar_N = 0,\\
+	& & &\xbar_{k+1} = \Ad \xbark + \Bd \ubark \text{\quad for all } k = 0,\dots,N,\\
+	& & &\norm{\xbark} \leq \boundx, \norm{\ubark} \leq \boundu \text{\quad for all } k = 0,\dots,N.
+	\end{aligned}
+\end{equation}

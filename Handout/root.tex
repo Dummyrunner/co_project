@@ -16,7 +16,7 @@
 
 
 % MYTHINGS
-\usepackage{amssymb,amsmath, amsfonts,color,bbold}
+\usepackage{amssymb,amsmath, amsfonts,color,bbm}
 \usepackage[ruled, vlined]{algorithm2e}
 \newtheorem{theorem}{Theorem}
 \newtheorem{definition}{Definition}
@@ -24,6 +24,7 @@
 \newtheorem{lemma}{Lemma}
 \newtheorem{corollary}{Corollary}
 \newcommand{\grad}{\nabla}
+\newcommand{\N}{\mathbb{N}}
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\Rn}{\mathbb{R}^n}
 \newcommand{\Rm}{\mathbb{R}^m}
@@ -35,6 +36,7 @@
 \newcommand{\hessfnull}{\grad^2 \fnull(x)}
 \newcommand{\hessfi}{\grad^2 f_i (x)}
 \newcommand{\xk}{x_k}
+\newcommand{\uk}{u_k}
 \newcommand{\Fxk}{F(\xk)}
 \newcommand{\jacFxk}{\jacF (\xk)}
 \newcommand{\xkplus}{x_{k+1}}
@@ -43,6 +45,11 @@
 \newcommand{\fnull}{f_0}
 \newcommand{\todo}{{\color{red} TODO!}}
 \newcommand{\xnull}{x_0}
+\newcommand{\xbar}{\bar{x}}
+\newcommand{\xbark}{\xbar_k}
+\newcommand{\xnullbar}{\xbar_0}
+\newcommand{\ubar}{\bar{u}}
+\newcommand{\ubark}{\ubar_k}
 \newcommand{\ind}[2]{{#1}_{\mathrm{#2}}}
 \newcommand{\ifct}{\ind{I}{-}}
 \newcommand{\ifcthat}{\ind{\hat{I}}{-}}
@@ -61,6 +68,9 @@
 \newcommand{\xplus}{x^+}
 \newcommand{\lambdaplus}{\lambda^+}
 \newcommand{\nuplus}{\nu^+}
+
+\newcommand{\Ad}{A_d}
+\newcommand{\Bd}{B_d}
 
 \newcommand{\epsfeas}{\ind{\epsilon}{feas}}
 \newcommand{\epsopt}{\ind{\epsilon}{opt}}
@@ -81,7 +91,7 @@
 \newcommand{\matlab}{MATLAB}
 \newcommand{\pdm}{Primal-Dual Method}
 \newcommand{\pdipm}{Primal-Dual Interior Point Method}
-\newcommand{\ones}{\mathbb{1}}
+\newcommand{\ones}{\mathbbm{1}}
 \newcommand{\rmu}{r_\mu (x,\lambda,\nu)}
 \newcommand{\rdual}{\ind{r}{dual}}
 \newcommand{\rcent}{\ind{r}{cent}}
@@ -91,6 +101,9 @@
 \newcommand{\deltaxln}{(\Delta x, \Delta \lambda,\Delta \nu)}
 %\newcommand{\norm}[1]{\parallel #1 \parallel}
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\normmax}[1]{\ind{\left\lVert#1\right\rVert}{max}}
+\newcommand{\boundu}{\ind{l}{u}}
+\newcommand{\boundx}{\ind{l}{x}}
 \newcommand{\phix}{\phi(x)}
 \newcommand{\nuhat}{\hat{\nu}}
 \newcommand{\movert}{\frac{m}{t}}
@@ -102,6 +115,8 @@
 \newcommand{\bkkt}{\ind{b}{KKT}}
 \newcommand{\sumitom}{\sum_{i=1}^{m}}
 \newcommand{\sumitop}{\sum_{i=1}^{p}}
+\newcommand{\mpc}{MPC}
+\newcommand{\mpclong}{Model Predictive Control}
 \newcommand{\OptProblem}{
 	\begin{aligned}
 	& \underset{x}{\text{minimize}}
