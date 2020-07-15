@@ -296,10 +296,9 @@ The upper bound
 on the maximal number of newton iterations that is needed to get a newton decrement (see remark \ref{re:newtonStop}) smaller than $ \epsnt $, where $ c $ depends on $  \epsnt $ by $ \log_2 \log_2(1/\epsnt) $, $ \popt $ is the primal problem's  optimal value and $ \gamma $ depends on choice of the backtracking parameters $ \alpha, \beta $ with\[ \frac{1}{\gamma} = \frac{20-8\alpha}{\alpha \beta (1-2\alpha)^2}.\]
 The derivation of this bound is shown in \cite{BV}, section 9.
 
-One can show
-that this bound holds uniformly for any parameter $ t $ for all problems \eqref{eq:ApproxProblem}.
+One can further show that this bound holds uniformly for any parameter $ t $ for all problems \eqref{eq:ApproxProblem}.
  Since there are exactly \[ \ceil*{ \frac{\log(m/\epsilon t_0)}{\log \mu}} \] outer steps neccessary to solve  \eqref{eq:ApproxProblem} with inital parameter $ t=t_0  $ and tolerance $ \epsilon $, the entire barrier method needs maximally
- \[ N = \ceil*{\frac{\log(m/\epsilon t_0)}{\log \mu}}\left( \frac{m(\mu - 1 -\log \mu)}{\gamma} + c\right)  \]    to yield a result with a suboptimality of $ \epsilon $ or smaller. Detailed reasoning can be found in \cite{BV}, section 11.5. Inner newton iterations, where $ m $ denotes the number of inequality constraints on  \eqref{eq:ApproxProblem}.
+ \[ N = \ceil*{\frac{\log(m/\epsilon t_0)}{\log \mu}}\left( \frac{m(\mu - 1 -\log \mu)}{\gamma} + c\right)  \]   inner newton iterations, where $ m $ denotes the number of inequality constraints on  \eqref{eq:ApproxProblem}. to yield a result with a suboptimality of $ \epsilon $ or smaller. Detailed reasoning can be found in \cite{BV}, section 11.5. 
 % CV 11.5
 
 
