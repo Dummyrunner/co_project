@@ -19,11 +19,6 @@ n = size(Q,1);
 m = size(Aineq,1);
 p = size(Aeq,1);
 
-% split stacked r into x, lambda, nu %remove?
-% x = r(1:n);
-% lambda = r((n+1):(n+m));
-% nu = r((n+m+1):(n+m+p));
-
 % Define Matrices for KKT-equality M_kkt*deltar = b_kkt
 if ~isempty(Aeq)
     M_kkt =  [Q                        Aineq'                  Aeq';...
