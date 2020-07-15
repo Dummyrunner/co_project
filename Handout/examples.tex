@@ -6,10 +6,14 @@ We consider the discrete time linear system
 	\xkplus = \Ad \xk + \Bd \uk, \label{eq:dynsys}
 \end{align}
 where $ \xk \in \Rn, \uk \in \Rm $ for all $ k \in  \N_0$, with the constraints that $ \normmax{\uk} \leq \boundu$
-and $ \normmax{\xk} \leq \boundx $ for all steps $ k\in \N_0 $. Further we assume that \eqref{eq:dynsys} has an equilibrium in $ x = 0 $ and the current state $ \xnull $ is gien. The maximum-norm is defined as the maximum absolute value over all entries of the vector, $\normmax{x} = \max_{1\leq i\leq n } |x_i| $.
+and $ \normmax{\xk} \leq \boundx $ for all steps $ k\in \N_0 $. Further we assume that \eqref{eq:dynsys} has an equilibrium in $ x = 0 $ and the current state $ \xnull $ is given. The maximum-norm is defined as the maximum absolute value over all entries of the vector, $\normmax{x} = \max_{1\leq i\leq n } |x_i| $.
 Goal is to find a input signal that steers the internal state $ x $ to zero, while additionally keeping $ u $ as small as possibly. Therefore, we consider the next $ N \in \N $ timesteps. We call $ N $ the prediction horizon.
 This leads to optimization of a certain objective function over all possible predicted steering signals $ \ubar = ({\ubar_1},{\dots},{\ubar_{N-1}})\trp $. We simulate the system for the next $ N $ timestep, hence we consider the sequence of states arising from applying a predicted sequence of input signals $ \ubar $. The sequence of predicted states we denote as $ (\xnullbar,\dots,\xbar_N)\trp $.
-We choose the quadratic objective function \[ \delta \sum_{k = 0}^{N-1} \underbrace{\xbark\trp Q \xbark }_{=: \norm{\xbark}_Q}+ \underbrace{\ubark \trp R \ubark}_{=:\norm{\ubark}_R}\] under the condition, that $ \xbar_N $, the last state in the predicted time, equals zero. 
+We choose the quadratic objective function
+\begin{equation}
+	\sum_{k = 0}^{N-1} \underbrace{\xbark\trp Q \xbark }_{=: \norm{\xbark}_Q}+ \underbrace{\ubark \trp R \ubark}_{=:\norm{\ubark}_R} \label{eq:mpcobjraw}
+\end{equation}
+ under the condition, that $ \xbar_N $, the last state in the predicted time, equals zero. 
 to minimize. The regarding predicted states directly follow from the system dynamics, in particular
 \[ \xbar_{k+1} = \Ad \xbark + \Bd \ubark. \]
 This setup we can summarize as an optimization problem
@@ -24,3 +28,34 @@ This setup we can summarize as an optimization problem
 	& & &\norm{\xbark} \leq \boundx, \norm{\ubark} \leq \boundu \text{\quad for all } k = 0,\dots,N.
 	\end{aligned}
 \end{equation}
+
+This problem can be transcribed into the form of $ \eqref{eq:OptProblem} $. We therefore optimize over the whole vector \[ \xtilde := \vectortwo{\xbar}{\ubar}. \] The objective function \eqref{eq:mpcobjraw} then can  be written as
+\[ \fnull(\xtilde) = \xtilde \trp  H \xtilde, \] with  the block diagonal matrix \[ H = \mathrm{diag}(\underbrace{Q,\dots,Q}_{N\cdot n \text{ blocks}},\underbrace{0}_{n \times n},\underbrace{R,\dots,R}_{N \cdot n \text{ blocks}}.) \]
+We further formulate the constraints at the maximum norms of state and input as $ \Aineq \xtilde \leq \bineq $, with $ \bineq = \ones \in \R^{N(n+m)+n \times 1} $ and
+\[ \Aineq = \begin{pmatrix}
+I_{n(N+1)} & 0\\
+-I_{n(N+1)} & 0\\
+0 & I_{N\cdot m}\\
+0 & -I_{N\cdot m}
+\end{pmatrix}\]
+where the indices of the identity-matrix $ I $ denote its dimensional size.
+Rearranging the system dynamics \eqref{eq:dynsys} and taking inital condition as well as zero terminal constraint into account can be written as the equality constraints $ \Aeq \xtilde = \beq $ with
+$ \Aeq =   \left( \Aeqx \quad \Aequ \right), $
+
+\begin{gather*}
+	\Aeqx =  \begin{pmatrix}
+	I_{n\times n} & 0 & \cdots & \cdots & 0\\
+	\Ad & -I_{n\times n} & \cdots & \cdots & \vdots\\
+	0 & \ddots & \ddots &  &  0\\
+	\vdots & & \ddots  & \ddots & 0\\
+	\vdots & \cdots & & \Ad & -I_{n\times n}\\
+	0 &\cdots& \cdots & 0& I_{n\times n},
+	\end{pmatrix}\\
+	\Aequ = \begin{pmatrix}
+	0 & \cdots & 0\\
+	\Bd &\ddots &\vdots\\
+	\vdots &\ddots & 0\\
+	0 & \cdots & \Bd\\
+	0 & \cdots & 0
+	\end{pmatrix} 
+\end{gather*}
