@@ -15,7 +15,7 @@ function [x,fval,lambda,nu,eta] = ipquad_pd(Q,c,Aineq,bineq,Aeq,beq,x0,lambda0,n
 %   initial values for the dual problem
 % - gamma is a reduction factor for reducing the barrier weight mu_barrier
 %   in each iteration. gamma in (0,1)
-% - eps_feas > 0 specifies the tolerance for the 2norms of the primal and the
+% - eps_feas > 0 specifies the tolerance for the 2norms of the primal and 
 %   dual residual
 % - eps_opt > 0 specifies a tolerance on the surrogate duality gap
 % - ls_alpha, ls_beta are parameters for the backtracking linesearch,
