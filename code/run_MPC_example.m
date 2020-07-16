@@ -31,7 +31,7 @@ ls_beta = 0.5;
 
 % initial predicted signals
 u0 = repmat(zeros(m,1),N,1);
-x0 = repmat([0.6; 0.8],N+1,1);
+x0 = repmat([0.5; 0.5],N+1,1);
 xtilde_init = [x0; u0];
 
 % state at initial time t

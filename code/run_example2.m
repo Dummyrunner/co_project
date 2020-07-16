@@ -1,4 +1,4 @@
-% Initialization of Example Optimization Problem
+% Initialization of Example Optimization Problem without eq. constraints
 
 % Matrices defining constraints
 Aineq = [-2 -3; -1 0; 0 -1]; bineq = [-4;0;0];
@@ -8,6 +8,7 @@ Aeq = []; beq = [];
 Q = 2.*[3 1; 1 1];
 c = [1; 6];
 
+% dimensions
 %  m,p = 1
 %  n = 2
 
@@ -25,7 +26,7 @@ x0 = [1;1];
 lambda0 = [0.2;1; 1];
 nu0 = 0;
 
-% [x,fval,lambda,nu,eta] = ipquad_pd(Q,c,Aineq,bineq,Aeq,beq,x0,lambda0,nu0,gamma,eps_feas,eps_opt,ls_alpha,ls_beta)
+[x,fval,lambda,nu,eta] = ipquad_pd(Q,c,Aineq,bineq,Aeq,beq,x0,lambda0,nu0,gamma,eps_feas,eps_opt,ls_alpha,ls_beta)
 
 %-------------Apply quadprog() to double check-------------------
-[quadprog_x,quadprog_fval] = quadprog(Q,c)
+% [quadprog_x,quadprog_fval] = quadprog(Q,c)

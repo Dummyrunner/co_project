@@ -21,10 +21,14 @@ function [x,fval,lambda,nu,eta] = ipquad_pd(Q,c,Aineq,bineq,Aeq,beq,x0,lambda0,n
 % - ls_alpha, ls_beta are parameters for the backtracking linesearch,
 %   performed in each iteration. Typical choices: ls_alpha in [0.01,0.1].
 %   ls_beta in [0.3,0.8]
+% Outputs:
+% - x is the best approximation on the primal optimum found by the algor.
+% - lambda, nu are the best approximation on the dual optimum
+% - fval is the objective's value eval. at x
+% - eta is the surrogate duality gap at lambda, x
 % --------------------------------------
 % Created: 24.06.20, Daniel Bergmann
 % --------------------------------------
-
 
 x = x0;
 lambda = lambda0;
@@ -35,7 +39,6 @@ n = size(Q,1);
 m = size(Aineq,1);
 p = size(Aeq,1);
 
-% TODO init dual variables if not passed to the algo. HOW?
 found = 0;
 count = 0;
 
@@ -46,7 +49,7 @@ while found == 0
     % Compute KKT residual vector
     r_mu = res_kkt(x,lambda,nu,Q,c,Aineq,bineq,Aeq,beq,mu_barrier);
     r_dual = r_mu(1:m);
-%     r_cent = r_mu((m+1):(m+p));
+    % r_cent = r_mu((m+1):(m+p));
     r_pri = r_mu((m+p+1):(m+p+n));
     
     if norm(r_pri) <= eps_feas && norm(r_dual) <= eps_feas && eta <= eps_opt
@@ -55,7 +58,6 @@ while found == 0
     else
         % update barrier weighting parmeter mu_barrier
         mu_barrier = gamma*eta/m;
-        
         % compute search vector
         [x, lambda, nu] = newtonquad_pd(Q, c, Aineq, bineq, Aeq, beq, ls_alpha, ls_beta, x,lambda, nu, mu_barrier);
     end
@@ -64,8 +66,7 @@ while found == 0
     disp(['Iteration No. ',num2str(count),'; current norm of residual: ',num2str(norm([x;lambda;nu])),';  eta = ',num2str(eta)])
 end
 
-
-% compute value of objective at x
+% evaluate obj. function at found x
 fval =  0.5.*x'*Q*x + c'*x;
 end
 

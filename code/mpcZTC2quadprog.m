@@ -1,7 +1,12 @@
 function [H,c,Aineq,bineq,Aeq,beq] = mpcZTC2quadprog(Ad,Bd,Q,R,delta,N,xt,xnormbound,unormbound)
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
-%   reprasing ztc mpc at time t, horizon N samples
+%MPCZTC2QUADPROG Translates a MPC problem with zero terminal constraints
+%into a quadratic program
+%   Model predictive control optimization problem of a time-discrete
+%   system determined by Ad, Bd with sample time delta and
+%   prediction horizon N, with current state xt and bounds on the maximum
+%   norm of state x and input u. Q,R define the objective that has to be
+%   minimized
+
 n = size(Ad,1);
 m = size(Bd,2);
 

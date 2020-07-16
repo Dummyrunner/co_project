@@ -1,4 +1,4 @@
-% Initialization of Example Optimization Problem
+% Initialization of Example Optimization Problem with eq. constraints
 
 % Matrices defining constraints
 Aineq = [0 1]; bineq = 10;

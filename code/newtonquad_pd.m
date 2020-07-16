@@ -8,8 +8,14 @@ function [x_new, lambda_new, nu_new] = newtonquad_pd(Q, c, Aineq, bineq, Aeq, be
 % kkt-conditions, second a suitable step-size is determined via a
 % backtracking linesearch
 % --------------------------------------
+% Input Arguments
 % - mu_barrier is the current weight on the barrier function
 % - for other input arguments, see comments in ipquad_pd.m
+% Outputs
+% - x_new, lambda_new, nu_new are the new primal-dual point after adding
+%   the search direction obtained by newton's method, multiplied by the
+%   step size obtained by backtracking line search to the old primal-dual
+%   point
 % --------------------------------------
 % Created: 24.06.20, Daniel Bergmann
 % --------------------------------------
