@@ -24,9 +24,9 @@ eps_opt = 1e-4;
 % initial primal dual point
 x0 = [1;1];
 lambda0 = [0.2;1; 1];
-nu0 = 0;
+
 
 [x,fval,lambda,nu,eta] = ipquad_pd(Q,c,Aineq,bineq,Aeq,beq,x0,lambda0,nu0,gamma,eps_feas,eps_opt,ls_alpha,ls_beta)
 
 %-------------Apply quadprog() to double check-------------------
-% [quadprog_x,quadprog_fval] = quadprog(Q,c)
+% [quadprog_x,quadprog_fval] = quadprog(Q,c,Aineq,bineq)
