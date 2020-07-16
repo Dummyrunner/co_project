@@ -1,4 +1,4 @@
-\todo notation N R
+
 \subsection{Newton's Method}
 Newton's method is an iterative process to solve nonlinear equation systems
 \begin{equation}
@@ -27,8 +27,7 @@ The procedure executing a Newton search is summarized in \eqref{alg:newton}.
 	\caption{Newton's Method}
 	\label{alg:newton}
 \end{algorithm}
-%\todo  newton decrement!!>?
-%TODO
+
 \begin{remark}\label{re:newtonStop}
 	The residual and the cauchy-criterion for termination should be combined for the newton method. Easy examples are known, where one of the criteria is satisfied even though the current iteration is far from the optimal point. For details, see \cite{SO}.
 	For theoretical reasoning, or if $ \grad^2 f(x)^{-1} $ can be used explicitely, one can also use the decreasement of $ \lambda^2 = \grad \fx \trp \grad^2 f(x)^{-1} \grad f(x)$ (so called newton-decrement) under a certain tolerance.

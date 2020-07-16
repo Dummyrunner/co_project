@@ -2,9 +2,9 @@
 %2345678901234567890123456789012345678901234567890123456789012345678901234567890
 %        1         2         3         4         5         6         7         8
 
-\documentclass[letterpaper, 10 pt, conference]{ieeeconf}  % Comment this line out if you need a4paper
+%\documentclass[letterpaper, 10 pt, conference]{ieeeconf}  % Comment this line out if you need a4paper
 
-%\documentclass[a4paper, 10pt, conference]{ieeeconf}      % Use this line for a4 paper
+\documentclass[a4paper, 10pt, conference]{ieeeconf}      % Use this line for a4 paper
 
 \IEEEoverridecommandlockouts                              % This command is only needed if 
                                                           % you want to use the \thanks command
@@ -18,6 +18,14 @@
 % MYTHINGS
 \usepackage{amssymb,amsmath, amsfonts,color,bbm}
 \usepackage[ruled, vlined]{algorithm2e}
+
+% packages for matlab listings
+% https://tex.stackexchange.com/questions/75116/what-can-i-use-to-typeset-matlab-code-in-my-document
+\usepackage[T1]{fontenc}
+\usepackage{bigfoot} % to allow verbatim in footnote
+\usepackage[numbered,framed]{matlab-prettifier}
+\usepackage{filecontents}
+
 \newtheorem{theorem}{Theorem}
 \newtheorem{definition}{Definition}
 \newtheorem{remark}{Remark}
@@ -225,7 +233,7 @@ to read it.
 %the main results/algorithms, discuss the underlying ideas and illustrate the results 
 %by numerical simulations.
 
-Notation. Throughout this paper, we denote the Jacobian of a function $ f: \Rn \longrightarrow \Rm $, differentiated along direction $ v $, evaluated at point $ x\in  \Rn $ by $ \jac_v f(x) $. The index $ v $ is omitted, if it is contextually clear. For a collection of scalar valued functions $ h_i: \Rn \longrightarrow \R, i = 1,\dots,m $ with the same domain, we define \[ h(x) := \vectorthree{h_1(x)}{\vdots}{h_m(x)} \] for the stacked values of all $ h_i $ evaluated at $ x \in \Rn $.
+Notation. Throughout this paper, we denote the set of all real numbers as $ \R $ and the set of all natural numbers as $ \N $, respectively $ \N_0  $ if zero is included. Furhter we denote the Jacobian of a function $ f: \Rn \longrightarrow \Rm $, differentiated along direction $ v $, evaluated at point $ x\in  \Rn $ as $ \jac_v f(x) $. The index $ v $ is omitted, if it is contextually clear. For a collection of scalar valued functions $ h_i: \Rn \longrightarrow \R, i = 1,\dots,m $ with the same domain, we define \[ h(x) := \vectorthree{h_1(x)}{\vdots}{h_m(x)} \] for the stacked values of all $ h_i $ evaluated at $ x \in \Rn $.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{PROBLEM STATEMENT AND BACKGROUND}
@@ -241,10 +249,10 @@ Notation. Throughout this paper, we denote the Jacobian of a function $ f: \Rn \
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{CONCLUSIONS}
-\todo
+Mainly, in this text we introduced the concept of barrier methods for convex optimization problems, which are applied to solve inequality-constraints that include inequality constraints. Therefore we approximate such problems by problems without inequality problems. Solving these problems yields points, that are only subobtimal in the sense of the original problem up to a certain bound. Via analyzing the Lagrangian of the original and the approximative problem, we verified this bound, dependent on the approximation parameter and the number of inequality constraints. The explanation of the barrier concept was followed was by an explanation how it can be applied algorithmically by the barrier method. Further, we gave an idea how to find a feasible initial point and also a time complexity bound of the barrier method, without proof. As an improvement, especially when dealing with quadratic problems, the \pdm \ was introduced, where only one newton step is executed before the approximation parameter is changed. Finally, we showed how quadratic programming can be applied on a linear \mpc \ problem with zero terminal constraints by reformulating it as a quadratic problem.
 
-Summarize the main points (with more details than in the preceding introduction).
-The paper should not be between 4 and 8 pages.
+%Summarize the main points (with more details than in the preceding introduction).
+%The paper should not be between 4 and 8 pages.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -261,7 +269,8 @@ The paper should not be between 4 and 8 pages.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{APPENDIX}
-
+\input{appendix}
+\todo code
 Add for example your Matlab code here. (Code should be nicely formated and documented).
 
 Appendixes should appear before the acknowledgment.

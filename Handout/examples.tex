@@ -18,7 +18,7 @@ to minimize. The regarding predicted states directly follow from the system dyna
 \[ \xbar_{k+1} = \Ad \xbark + \Bd \ubark. \]
 This setup we can summarize as an optimization problem
 \begin{equation}
-	\begin{aligned}
+	\begin{aligned} \label{eq:mpcProblem}
 	& \underset{\ubar=(\ubar_0,\dots,\ubar_{N-1})\trp}{\text{minimize}}
 	& & \sum_{k = 1}^{N-1} \norm{\xbark}_Q + \norm{\xbark}_R\\
 	& \text{subject to}
@@ -28,6 +28,9 @@ This setup we can summarize as an optimization problem
 	& & &\norm{\xbark} \leq \boundx, \norm{\ubark} \leq \boundu \text{\quad for all } k = 0,\dots,N.
 	\end{aligned}
 \end{equation}
+
+
+\todo sample vs horizon\\
 
 This problem can be transcribed into the form of $ \eqref{eq:OptProblem} $. We therefore optimize over the whole vector \[ \xtilde := \vectortwo{\xbar}{\ubar}. \] The objective function \eqref{eq:mpcobjraw} then can  be written as
 \[ \fnull(\xtilde) = \xtilde \trp  H \xtilde, \] with  the block diagonal matrix \[ H = \mathrm{diag}(\underbrace{Q,\dots,Q}_{N\cdot n \text{ blocks}},\underbrace{0}_{n \times n},\underbrace{R,\dots,R}_{N \cdot n \text{ blocks}}.) \]
@@ -40,7 +43,7 @@ I_{n(N+1)} & 0\\
 \end{pmatrix}\]
 where the indices of the identity-matrix $ I $ denote its dimensional size.
 Rearranging the system dynamics \eqref{eq:dynsys} and taking inital condition as well as zero terminal constraint into account can be written as the equality constraints $ \Aeq \xtilde = \beq $ with
-$ \Aeq =   \left( \Aeqx \quad \Aequ \right), $
+$ \Aeq =   \left( \Aeqx \quad \Aequ \right), $ where
 
 \begin{gather*}
 	\Aeqx =  \begin{pmatrix}
@@ -57,5 +60,7 @@ $ \Aeq =   \left( \Aeqx \quad \Aequ \right), $
 	\vdots &\ddots & 0\\
 	0 & \cdots & \Bd\\
 	0 & \cdots & 0
-	\end{pmatrix} 
+	\end{pmatrix}.
 \end{gather*}
+
+With these matrices, we rewrote \eqref{eq:mpcProblem} as an equivalent problem in shape of  \eqref{eq:OptProblem}.
