@@ -7,19 +7,19 @@ function [x_new, lambda_new, nu_new] = newtonquad_pd(Q, c, Aineq, bineq, Aeq, be
 % the nonlinear equation system r = 0 with r the residual of the
 % kkt-conditions, second a suitable step-size is determined via a
 % backtracking linesearch
-% -------------------------------------------------------------------------
+% --------------------------------------
 % - mu_barrier is the current weight on the barrier function
 % - for other input arguments, see comments in ipquad_pd.m
-% -------------------------------------------------------------------------
+% --------------------------------------
 % Created: 24.06.20, Daniel Bergmann
-%--------------------------------------------------------------------------
+% --------------------------------------
 
 % initialize dimensions
 n = size(Q,1);
 m = size(Aineq,1);
 p = size(Aeq,1);
 
-% Define Matrices for KKT-equality M_kkt*deltar = b_kkt
+% Define Matrices for KK7T-equality M_kkt*deltar = b_kkt
 if ~isempty(Aeq)
     M_kkt =  [Q                        Aineq'                  Aeq';...
         -diag(lambda)*Aineq     -diag(Aineq*x-bineq)      zeros(m,p);

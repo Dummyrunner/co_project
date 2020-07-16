@@ -2,7 +2,7 @@ function [x,fval,lambda,nu,eta] = ipquad_pd(Q,c,Aineq,bineq,Aeq,beq,x0,lambda0,n
 %IPQUAD_PD Quadratic optimization via primal-dual-interior-point-method.
 % Convex Quadr. function f(x) = (1/2)x'Qx + c'x with linear equality and
 % inequality constraints.
-% -------------------------------------------------------------------------
+% --------------------------------------
 % Input Arguments:
 % - Q,c define objective function
 %   dim(Q) = nxn, dim c = nx1
@@ -21,9 +21,9 @@ function [x,fval,lambda,nu,eta] = ipquad_pd(Q,c,Aineq,bineq,Aeq,beq,x0,lambda0,n
 % - ls_alpha, ls_beta are parameters for the backtracking linesearch,
 %   performed in each iteration. Typical choices: ls_alpha in [0.01,0.1].
 %   ls_beta in [0.3,0.8]
-%--------------------------------------------------------------------------
+% --------------------------------------
 % Created: 24.06.20, Daniel Bergmann
-%--------------------------------------------------------------------------
+% --------------------------------------
 
 
 x = x0;
