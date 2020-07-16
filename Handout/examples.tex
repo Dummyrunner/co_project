@@ -1,6 +1,36 @@
-Quadratic optimization problems are arising in practical applications frequently. To pick one example, we here present the application of interior methods on a \mpclong \ (\mpc) problem. More precisely, a \mpc of a linear system with zero terminal constraint (ZTC).
+We give an implementation of the \pdm \ (Algorithm \ref{alg:pdip}) in \matlab, along with two example problems. One with equality constraints, one without.
 
-\subsection{Problem description \mpc}
+\subsection{Numerical Examples}
+\subsubsection{Example 1}
+The effectivity of the algorithm can be demonstrated with the following explicit example of \eqref{eq:OptProblem}. For the problem defined by
+\begin{gather*}
+	Q = 2\cdot \begin{pmatrix}
+	1 & 0\\ 0 & 2
+\end{pmatrix}; \quad c = \vectortwo{1}{2}\\
+\Aeq= \begin{pmatrix}
+1 & -1
+\end{pmatrix};\quad \beq= 0;\\
+\Aineq = \begin{pmatrix}
+0 & 1
+\end{pmatrix}; \quad \beq= 10,
+\end{gather*}
+we choose backtracking parameters $ \alpha 0.05,\beta = 0.5 $ as well as $ \gamma = 0.1 $ for the reduction of the approximation parameter. Initial points are set to $ \xnull = (1,1)\trp, \lambda_0 = 1, \nu_0 = 0 $ and tolerances to $ \epsfeas = \epsopt = 10^{-4} $.
+\subsubsection{Example 2 }
+To test algorithm \eqref{alg:pdip} on a problem without equality constraints, we moreover provide a second example, taken from \cite{EX}. The problem is defined
+\begin{gather*}
+		Q = 2\cdot \begin{pmatrix}
+	3 & 1\\ 1 & 1
+	\end{pmatrix}; \quad c = \vectortwo{1}{6};\\
+	\Aineq = \begin{pmatrix}
+	-2 & -3 \\ 0& -1
+	\end{pmatrix}; \quad \bineq= \begin{pmatrix}
+	-4\\0\\0
+	\end{pmatrix},
+\end{gather*}
+while initial values are chosen as $ \xnull = (1,1)\trp $ and $ \lambda_0 = (0.2,1,1)\trp $ (like suggested in remark \ref{re:dualinit}). Tolerances and backtracking-paramters are chosen as in Example 1.
+
+\subsection{\mpclong}
+Quadratic optimization problems are arising in practical applications frequently. To pick one example, we here present the application of interior methods on a \mpclong \ (\mpc) problem. More precisely, a \mpc of a linear system with zero terminal constraint (ZTC).
 We consider the discrete time linear system
 \begin{align}
 	\xkplus = \Ad \xk + \Bd \uk, \label{eq:dynsys}
@@ -13,10 +43,11 @@ We choose the quadratic objective function
 \begin{equation}
 	\sum_{k = 0}^{N-1} \underbrace{\xbark\trp Q \xbark }_{=: \norm{\xbark}_Q}+ \underbrace{\ubark \trp R \ubark}_{=:\norm{\ubark}_R} \label{eq:mpcobjraw}
 \end{equation}
- under the condition, that $ \xbar_N $, the last state in the predicted time, equals zero. 
+ under the condition, that $ \xbar_N $, the last state in the predicted time, equals zero,
 to minimize. The regarding predicted states directly follow from the system dynamics, in particular
-\[ \xbar_{k+1} = \Ad \xbark + \Bd \ubark. \]
-This setup we can summarize as an optimization problem
+\[ \xbar_{k+1} = \Ad \xbark + \Bd \ubark. \] After finding an optimal signal $ \ubar $ we apply $ \ubar_0 $ in the next time step. After this first step, we again start an optimization over the next $ N $ timesteps. So even though the optimization problem is computed considering all signals up to the prediction horizon, the result is only applied for one timestep, before the next optimization is executed.
+
+We can summarize one optimization step as an optimization problem
 \begin{equation}
 	\begin{aligned} \label{eq:mpcProblem}
 	& \underset{\ubar=(\ubar_0,\dots,\ubar_{N-1})\trp}{\text{minimize}}
@@ -29,8 +60,6 @@ This setup we can summarize as an optimization problem
 	\end{aligned}
 \end{equation}
 
-
-\todo sample vs horizon\\
 
 This problem can be transcribed into the form of $ \eqref{eq:OptProblem} $. We therefore optimize over the whole vector \[ \xtilde := \vectortwo{\xbar}{\ubar}. \] The objective function \eqref{eq:mpcobjraw} then can  be written as
 \[ \fnull(\xtilde) = \xtilde \trp  H \xtilde, \] with  the block diagonal matrix \[ H = \mathrm{diag}(\underbrace{Q,\dots,Q}_{N\cdot n \text{ blocks}},\underbrace{0}_{n \times n},\underbrace{R,\dots,R}_{N \cdot n \text{ blocks}}.) \]

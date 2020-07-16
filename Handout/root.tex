@@ -98,8 +98,8 @@
 \newcommand{\beq}{\ind{b}{eq}}
 \newcommand{\Aeqx}{\Aeq^x}
 \newcommand{\Aequ}{\Aeq^u}
-\newcommand{\Aineq}{\ind{A}{\leq}}
-\newcommand{\bineq}{\ind{b}{\leq}}
+\newcommand{\Aineq}{\ind{A}{{  in}}}
+\newcommand{\bineq}{\ind{b}{{  in}}}
 \newcommand{\trp}{^T}
 \newcommand{\matlab}{MATLAB}
 \newcommand{\pdm}{Primal-Dual Method}
@@ -233,7 +233,7 @@ to read it.
 %the main results/algorithms, discuss the underlying ideas and illustrate the results 
 %by numerical simulations.
 
-Notation. Throughout this paper, we denote the set of all real numbers as $ \R $ and the set of all natural numbers as $ \N $, respectively $ \N_0  $ if zero is included. Furhter we denote the Jacobian of a function $ f: \Rn \longrightarrow \Rm $, differentiated along direction $ v $, evaluated at point $ x\in  \Rn $ as $ \jac_v f(x) $. The index $ v $ is omitted, if it is contextually clear. For a collection of scalar valued functions $ h_i: \Rn \longrightarrow \R, i = 1,\dots,m $ with the same domain, we define \[ h(x) := \vectorthree{h_1(x)}{\vdots}{h_m(x)} \] for the stacked values of all $ h_i $ evaluated at $ x \in \Rn $.
+Notation. Throughout this paper, we denote the set of all real numbers as $ \R $ and the set of all natural numbers as $ \N $, respectively $ \N_0  $ if zero is included. Further we denote the Jacobian of a function $ f: \Rn \longrightarrow \Rm $, differentiated along direction $ v $, evaluated at point $ x\in  \Rn $ as $ \jac_v f(x) $. The index $ v $ is omitted, if it is contextually clear. For a collection of scalar valued functions $ h_i: \Rn \longrightarrow \R, i = 1,\dots,m $ with the same domain, we define \[ h(x) := \vectorthree{h_1(x)}{\vdots}{h_m(x)} \] for the stacked values of all $ h_i $ evaluated at $ x \in \Rn $.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{PROBLEM STATEMENT AND BACKGROUND}
@@ -253,11 +253,11 @@ Mainly, in this text we introduced the concept of barrier methods for convex opt
 
 %Summarize the main points (with more details than in the preceding introduction).
 %The paper should not be between 4 and 8 pages.
-
+\newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\addtolength{\textheight}{-12cm}   % This command serves to balance the column lengths
+%\addtolength{\textheight}{-12cm}   % This command serves to balance the column lengths
                                   % on the last page of the document manually. It shortens
                                   % the textheight of the last page by a suitable amount.
                                   % This command does not take effect until the next page
@@ -270,22 +270,19 @@ Mainly, in this text we introduced the concept of barrier methods for convex opt
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{APPENDIX}
 \input{appendix}
-\todo code
-Add for example your Matlab code here. (Code should be nicely formated and documented).
 
-Appendixes should appear before the acknowledgment.
-
-\section*{ACKNOWLEDGMENT}
+%\section*{ACKNOWLEDGMENT}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %\bibliographystyle{plain}
 %\bibliography{c:/home/Lehre/VO/SS17/ND/Projects/Latex/mybib}
-
+\newpage
 \begin{thebibliography}{99}
 	  \bibitem{SO} Carsten Scherer {\em Vorlesungsskript Einführung in die Optimierung} 2019: Lehrstuhl für Mathematische Systemtheorie, Universität Stuttgart.
 	  \bibitem{BV} Stephen Boyd, Lieven Vandenberghe {\em Convex Optimization} 2004: Cambridge University Press.
+	  \bibitem{EX} Jack Heider, {\em Quadratic programming}  2015: online, \verb|https://optimization.mccormick.northwestern.edu|\\ \verb|/index.php/Quadratic_programming|.
 \end{thebibliography}
 
 \end{document}
