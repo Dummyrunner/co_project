@@ -14,7 +14,18 @@ The effectivity of the algorithm can be demonstrated with the following explicit
 0 & 1
 \end{pmatrix}; \quad \beq= 10,
 \end{gather*}
-we choose backtracking parameters $ \alpha 0.05,\beta = 0.5 $ as well as $ \gamma = 0.1 $ for the reduction of the approximation parameter. Initial points are set to $ \xnull = (1,1)\trp, \lambda_0 = 1, \nu_0 = 0 $ and tolerances to $ \epsfeas = \epsopt = 10^{-4} $.
+we choose backtracking parameters $ \alpha 0.05,\beta = 0.5 $ as well as $ \gamma = 0.1 $ for the reduction of the approximation parameter. Initial points are set to $ \xnull = (1,1)\trp, \lambda_0 = 1, \nu_0 = 0 $ and tolerances to $ \epsfeas = \epsopt = 10^{-4} $.\\
+
+With this setup, the solver terminates after 20 iterations and yields the following results:
+\begin{align*}
+	\xopt &= \vectortwo{-1.0000}{-1.0000};\\
+	\lambdaopt&= 5.6650\cdot 10^{-6};\\ \nu&= 2.7562\cdot 10^{-6};\\
+	\fnull(\xopt) &= -1.5000;\\ \etahat&= 6.2315\cdot 10^{-6}.
+\end{align*}
+
+
+
+
 \subsubsection{Example 2 }
 To test algorithm \eqref{alg:pdip} on a problem without equality constraints, we moreover provide a second example, taken from \cite{EX}. The problem is defined
 \begin{gather*}
@@ -29,3 +40,9 @@ To test algorithm \eqref{alg:pdip} on a problem without equality constraints, we
 \end{gather*}
 while initial values are chosen as $ \xnull = (1,1)\trp $ and $ \lambda_0 = (0.2,1,1)\trp $ (like suggested in remark \ref{re:dualinit}). Tolerances and backtracking-paramters are chosen as in Example 1.
 
+With termination after 20 iterations, the solver yields the results
+\begin{align}
+	\xopt &= \vectortwo{0.5000}{1.0000}\\
+	\lambdaopt &= \vectorthree{3.0000}{0.0001}{2.812\cdot 10^{-5}}\\
+	\fnull(\xopt) &= 9.2500.
+\end{align}
