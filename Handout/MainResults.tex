@@ -1,3 +1,4 @@
+Convex problems without equality constraints can be solved using newton's method. We at first explain the idea of Newton's method shortly, since basically it is the algorithm we want to apply. The barrier method, presented afterwards, is a way to use Newton's method also for inequality-constrained problems.
 
 \subsection{Newton's Method}
 Newton's method is an iterative process to solve nonlinear equation systems
@@ -94,8 +95,7 @@ For the sake of simplifying notation, throughout this section we consider the pr
 \end{equation}
 that is obtained by multiplying the objective in \eqref{eq:ApproxProblem} with $ t>0 $. The original and the obtained problem are equvialent.
 Any arbitrary $ \xoptt $ a strictly feasible point of \eqref{eq:OptProblem}. Since $ \xoptt $ solves \eqref{eq:ApproxProblemMult}, there exists $ \nuhat \in \Rp$, such that\\
-%\todo define $ L_t $ as gradient for approx problem\\
-\todo check consistency
+
 \begin{align}
 	\grad L_t(\xoptt, \nuhat) &= t \grad \fnull(\xoptt) + \grad \phi(\xoptt) + \Aeq \trp \nuhat\\
 					&= t\grad f_0 (\xoptt) \notag\\&\quad+ \gradphiexpv{\xoptt} + \Aeq\trp \nuhat.\\&=0

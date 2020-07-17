@@ -199,7 +199,7 @@
 
 \author{Daniel Bergmann $^{1}$% <-this % stops a space
 \thanks{*Project within the course Convex Optimization, University of Stuttgart, \today.}% <-this % stops a space
-\thanks{$^{1}$Daniel Bergmann is a student of the Bachelor study program Mechatronics, University of Stuttgart,
+\thanks{$^{1}$Daniel Bergmann is a student of the Master study program Mathematics, University of Stuttgart,
         {\tt\small st108500@stud.uni-stuttgart.de}}%
 }
 
@@ -215,9 +215,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
-
-Describe in a few sentences what the paper is about and why it is interesting 
-to read it.
+Interior-point-methods allow to treat convex optimization problems that include inequality constraints. Via a barrier function, approximated inequality constraints are transferred to the objective function implicitely, while conclusions can be drawn about the optimal value of the original problem, by solving the approximated one. Two interior-point algorithms are presented. For one of them, we give an implementation in \matlab.
 
 \end{abstract}
 
@@ -233,6 +231,8 @@ to read it.
 %We present the problem statement (optimization problem)
 %the main results/algorithms, discuss the underlying ideas and illustrate the results 
 %by numerical simulations.
+
+Subject of this paper is the concept of interior point methods in convex optimization to solve problems including inequality constraints. Therefore we introduce the concept of barrier functions. With that we can approximate the problem without any inequality constraints. We begin with a brief introduction of Newton's method, with which equality constrained convex problems can be solved effectively. Then the barrier concept in general is explainedm, including an argument to show a bound on suboptimality, that a optimal point of the approximative problem has regarding to the original one. Further, we proceed with two algorithms using barrier funcitons: Firstly, the barrier method with full newton search, secondly the \pdm, which provides better performance for certain problem classes. After we gave an idea, how to find a feasible initial point, we conclude the paper by applying an \matlab-Implementation of the \pdm \ on two examples.
 
 Notation. Throughout this paper, we denote the set of all real numbers as $ \R $ and the set of all natural numbers as $ \N $, respectively $ \N_0  $ if zero is included. Further we denote the Jacobian of a function $ f: \Rn \longrightarrow \Rm $, differentiated along direction $ v $, evaluated at point $ x\in  \Rn $ as $ \jac_v f(x) $. The index $ v $ is omitted, if it is contextually clear. For a collection of scalar valued functions $ h_i: \Rn \longrightarrow \R, i = 1,\dots,m $ with the same domain, we define \[ h(x) := \vectorthree{h_1(x)}{\vdots}{h_m(x)} \] for the stacked values of all $ h_i $ evaluated at $ x \in \Rn $.
 
@@ -254,7 +254,7 @@ Mainly, in this text we introduced the concept of barrier methods for convex opt
 
 %Summarize the main points (with more details than in the preceding introduction).
 %The paper should not be between 4 and 8 pages.
-\newpage
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -267,7 +267,8 @@ Mainly, in this text we introduced the concept of barrier methods for convex opt
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
+\newpage
+\newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{APPENDIX}
 \input{appendix}
