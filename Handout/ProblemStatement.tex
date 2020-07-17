@@ -3,8 +3,8 @@ For theoretical discussions, we consider the convex constrained optimization pro
 \OptProblem
 \label{eq:OptProblem}
 \end{equation}
-with $ f_0:\Rn \longrightarrow \R $ convex and twice differentiable, $ f_i:\Rn \longrightarrow \R $ for $ i=1,\dots,m $ convex and differentiable,
-$ \Aeq \in \R^{n\times p}, \beq \in  \R^p $ with equality and inequality constraints. For such an optimization problem, we call its Lagrangian $ L:\Rn \times \Rm \times \Rp \longrightarrow \R $
+with $ f_0:\Rn \longrightarrow \R $ convex and twice differentiable, $ f_i:\Rn \longrightarrow \R $ for $ i=1,\dots,m $ convex and differentiable,  with equality and inequality constraints described by
+$ \Aeq \in \R^{n\times p}, \beq \in  \R^p $. For such an optimization problem, we call its Lagrangian $ L:\Rn \times \Rm \times \Rp \longrightarrow \R $
 with  \[ L(x,\lambda,\nu) = \fnull(x) + \lambda\trp f(x) + \nu \trp (\Aeq x - \beq).  \]
 Further, we denote its dual problem by
 \begin{equation}
@@ -20,4 +20,4 @@ Moreover, we give a \matlab-implementation of a primal-dual interiorpoint method
 	\label{eq:QuadProblem}
 \end{equation}
 with matrices $ 0 \prec Q\in \R^{n \times n}, c\in \Rn $.
-Quadratic programming has multiple applications in various fields, such as artificial intelligence or control. A way to apply it for example on a zero terminal \mpclong \ is shown in the appendix.
+Quadratic programming has multiple applications in various fields, such as artificial intelligence or control. To pick one example, a way to apply it on  a zero terminal constraint \mpclong \ problem is shown in the appendix.
