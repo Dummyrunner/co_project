@@ -11,14 +11,14 @@ Computing KKT residual vector from problem matrices and current points:\\
 
 
 \subsection{\mpclong}
-To illustrate the practical relevance of quadratic programming in e.g. control tasks, we here present the application of interior methods on a \mpclong \ (\mpc) problem. More precisely, a \mpc of a linear system with zero terminal constraint (ZTC).
+To illustrate the practical relevance of quadratic programming in e.g. control tasks, we here present the application of interior methods on a \mpclong \ (\mpc) problem. More precisely, a \mpc \ applied on a linear system with zero terminal constraint (ZTC).
 We consider the discrete time linear system
 \begin{align}
 \xkplus = \Ad \xk + \Bd \uk, \label{eq:dynsys}
 \end{align}
 where $ \xk \in \Rn, \uk \in \Rm $ for all $ k \in  \N_0$, with the constraints that $ \normmax{\uk} \leq \boundu$
-and $ \normmax{\xk} \leq \boundx $ for all steps $ k\in \N_0 $. Further we assume that \eqref{eq:dynsys} has an equilibrium in $ x = 0 $ and the current state $ \xnull $ is given. The maximum-norm is defined as the maximum absolute value over all entries of the vector, $\normmax{x} = \max_{1\leq i\leq n } |x_i| $.
-Goal is to find a input signal that steers the internal state $ x $ to zero, while additionally keeping $ u $ as small as possibly. Therefore, we consider the next $ N \in \N $ timesteps. We call $ N $ the prediction horizon.
+and $ \normmax{\xk} \leq \boundx $ for all steps $ k\in \N_0 $. Further we assume that \eqref{eq:dynsys} has an equilibrium in $ x = 0 $ and the current state $ \xnull $ is given. The maximum-norm is defined as the maximum absolute value over all entries of the vector, $\normmax{x} = \max_{1\leq i\leq n } |x_i| $ for $ x\in \Rn $.
+Goal is to find a input signal that steers the internal state $ x $ to zero, while additionally keeping $ u $ as small as possible. Therefore, we consider the next $ N \in \N $ timesteps. We call $ N $ the prediction horizon.
 This leads to optimization of a certain objective function over all possible predicted steering signals $ \ubar = ({\ubar_1},{\dots},{\ubar_{N-1}})\trp $. We simulate the system for the next $ N $ timestep, hence we consider the sequence of states arising from applying a predicted sequence of input signals $ \ubar $. The sequence of predicted states we denote as $ (\xnullbar,\dots,\xbar_N)\trp $.
 We choose the quadratic objective function
 \begin{equation}

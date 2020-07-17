@@ -78,8 +78,8 @@ approximation
 \end{equation}
 of problem \eqref{eq:OptProblem}. Throughout this paper, we denote its  Lagrangian by $ L_t: \Rn \times \Rp \longrightarrow \R $.
 
-Note that $ \frac{1}{t}\log(-u) $ is convex, increasing in $ u $, and differentiable on the feasible set. Hence the entire function $ \sum_{i=1}^{m} \ifcthat(f_i(x)) $ is convex and \eqref{eq:ApproxProblem} is a convex Problem with differentiable objective function. These properties allow us to solve $ \eqref{eq:ApproxProblem} $ computationally.
-We call an optimal point $ \xopt(t) $ of \eqref{eq:ApproxProblem} with parameter $ t $  a central point and a solution to its dual problem $ (\lambdaopt(t),\nuopt(t)) $ a dual central point. The set of (dual) solutions of \eqref{eq:ApproxProblem} for all $ t>0 $ we call the (dual) central path. Since for points $ x $ with $ f_i(x) = 0 $ for any $ x \in \{1,\dots,m \} $, the objective of \eqref{eq:ApproxProblem} is $ \infty $, all central points are in the interior of the set, satisfying the inequality constraints of \eqref{eq:OptProblem}. Thus this framework is named interior point method. One can show, that solutions $ (\xoptt,\lambdaoptt,\nuoptt) $ of \eqref{eq:ApproxProblem} converge to the solution  $ (\xopt,\lambdaopt, \nuopt) $ of \eqref{eq:OptProblem} for $ t  \longrightarrow 0 $. The proof can be found in \cite{BV}.
+Note that $ -\frac{1}{t}\log(-u) $ is convex, increasing in $ u $, and differentiable on the feasible set. Hence the entire function $ \sum_{i=1}^{m} \ifcthat(f_i(x)) $ is convex and \eqref{eq:ApproxProblem} is a convex Problem with differentiable objective function. These properties allow us to solve $ \eqref{eq:ApproxProblem} $ computationally.
+We call an optimal point $ \xopt(t) $ of \eqref{eq:ApproxProblem} with parameter $ t $  a central point and a solution to its dual problem $ (\lambdaopt(t),\nuopt(t)) $ a dual central point. The set of (dual) solutions of \eqref{eq:ApproxProblem} for all $ t>0 $ we call the (dual) central path. Since for points $ x $ with $ f_i(x) = 0 $ for any $ i \in \{1,\dots,m \} $, the objective of \eqref{eq:ApproxProblem} is $ \infty $, all central points are in the interior of the set, satisfying the inequality constraints of \eqref{eq:OptProblem}. Thus this framework is named interior point method. One can show, that solutions $ (\xoptt,\lambdaoptt,\nuoptt) $ of \eqref{eq:ApproxProblem} converge to the solution  $ (\xopt,\lambdaopt, \nuopt) $ of \eqref{eq:OptProblem} for $ t  \longrightarrow 0 $. The proof can be found in \cite{BV}.
 \label{sec:BarrierConcept}
 \subsection{Measure for the Approximation's quality}
 An immediately arising question is which conclusions about the solution $ (\xopt,\lambdaopt, \nuopt) $ of \eqref{eq:OptProblem} can be drawn from knowing a solution of $ \eqref{eq:ApproxProblem} $ for a certain $ t>0 $ about the value $ \fnull(\xoptt) $  of a central point $ \xoptt $, compared with the optimal value $ \popt $ of the original problem. 
@@ -93,8 +93,8 @@ For the sake of simplifying notation, throughout this section we consider the pr
 \begin{equation}
 	\ApproxOptProblemMultt \label{eq:ApproxProblemMult}
 \end{equation}
-that is obtained by multiplying the objective in \eqref{eq:ApproxProblem} with $ t>0 $. The original and the obtained problem are equvialent.
-Any arbitrary $ \xoptt $ a strictly feasible point of \eqref{eq:OptProblem}. Since $ \xoptt $ solves \eqref{eq:ApproxProblemMult}, there exists $ \nuhat \in \Rp$, such that\\
+that is obtained by multiplying the objective in \eqref{eq:ApproxProblem} with $ t>0 $. This is equivalent to \eqref{eq:ApproxProblem}. With $ L_t, $ we denote the Lagrangian of \eqref{eq:ApproxProblemMult}.
+Any arbitrary $ \xoptt $ a strictly feasible point of \eqref{eq:OptProblem}. Since $ \xoptt $ solves \eqref{eq:ApproxProblemMult}, there exists a $ \nuhat \in \Rp$, such that\\
 
 \begin{align}
 	\grad L_t(\xoptt, \nuhat) &= t \grad \fnull(\xoptt) + \grad \phi(\xoptt) + \Aeq \trp \nuhat\\
@@ -102,7 +102,7 @@ Any arbitrary $ \xoptt $ a strictly feasible point of \eqref{eq:OptProblem}. Sin
 					\label{eq:centralPathLagr}
 \end{align}
 holds. Note that  the Lagrangian only depends on $ (x,\nuhat) $, since there are no explicit inequality constraints involved. We keep in mind, that $ \xoptt $ minimizes \eqref{eq:ApproxProblem}.
-Using this insight, we know that there exists a dual feasible point $ (\xoptt,\lambdaoptt, \nuoptt) $ of the original problem \eqref{eq:OptProblem}. In particular, we choose
+Using this insight, we can show that there exists a dual feasible point $ (\xoptt,\lambdaoptt, \nuoptt) $ of the original problem \eqref{eq:OptProblem}. In particular, we choose
 \begin{gather*}
 	\lambdaoptt = -\frac{1}{tf_i(\xoptt)}\text{ for }i=1,\dots,m,\quad \nuoptt= \frac{\nuhat}{t}.
 \end{gather*}
@@ -112,7 +112,7 @@ Here, $ \lambdaoptt > 0 $ follows from $ f_i(\xopt) < 0 $ for all $ i = 1,\dots,
 Note that \eqref{eq:centralPathLagr} is the derivative of the Lagrangian 
 \[ L(x,\lambda,\nu) = f_0(x) + \sum_{i=1}^{m}\lambdai^*(t) f_i(x) + \nuoptt \trp (\Aeq \xoptt - \beq) \]
  dividied by $ t>0 $ of the original problem.
-The Lagrangian is convex in the first coordinate, hence we infer that $ \xoptt $ minimizes the Lagrangian  of the original problem for any fixed $ (\lambda,\nu) $.
+The Lagrangian is convex in $ x $, hence we infer that $ \xoptt $ minimizes the Lagrangian  of the original problem for any fixed $ (\lambda,\nu) $.
 For the dual function of the original problem, we obtain
 \begin{align}
 \begin{split}
@@ -133,13 +133,13 @@ By weak duality, this means that the optimum $ \xoptt $ of the approximated prob
 \label{sec:approxMeasure}
 
 \subsection{Algorithmic Use of the Barrier Concept}
-As already mentioned in section \ref{sec:approxMeasure}, one can not solve  \eqref{eq:ApproxProblem} generally without a good guess of the initial value $ \xnull $. So how to make use of the barrier concept? The idea of interior methods is, to find points along the problem's central path. Two methods are introduced in the following. Emphasis of the explanations as well as the implementation in \matlab \ will be on the Primal-Dual Interior Point Method.
+As already mentioned in section \ref{sec:approxMeasure}, one can not solve  \eqref{eq:ApproxProblem}  without a good guess of the initial value $ \xnull $. So how to make use of the barrier concept? The idea of interior methods is, to find points along the problem's central path. Two methods are introduced in the following.
 \subsubsection{Barrier Method}
 As mentioned before, for large $ t $ a good initial point $ \xnull $, meaning an initial point that is not far away from the actual minimum of \eqref{eq:OptProblem}, is crucial for avoiding large numerical errors. This can be achieved by starting with optimization of \eqref{eq:ApproxProblem} for small $ t=t_1 $, which leads to a rather bad approximation of the original problem, but also to better numerical behavior. After finding $ \xopt(t_1) $ via Newton's method, $ t $ is increased to $ t= t_2 > t_1 $ by a certain rate and  \eqref{eq:ApproxProblem} is solved again with parameter $ t = t_2 $, with choice $ \xnull = \xopt(t_1) $ for the initial point.
 %For step $ n $ of the algorithm call finding $ \xoptt $ the centering, or outer iteration, step of the algorithm and increasing $ t_n \mapsto t_{n+1} $ with setting $ \xnull :=  \xopt(t_n)$ an outer iteration.
 %For step $ n $ of the algorithm call finding $ \xoptt $ the centering, and updating $ t $ and $ \xoptt $ an outer iteration or centering point and a iteration of the newton algorithm within the centering step an inner iteration. The whole procedure is written in Algorithm \ref{alg:BarrierFullNewton}.
 
-We call finding the minimum $ \xoptt $ of  \eqref{eq:ApproxProblem} the centering step or outter iteration, while we call a single Newton step inside  the centering step an inner iteration.
+We call finding the minimum $ \xoptt $ of  \eqref{eq:ApproxProblem} the centering step or outter iteration, while we call a single Newton step inside  the centering step an inner iteration. The algorithm is shown explicitely as Algorithm  \eqref{alg:BarrierFullNewton}.
 
 % notes on convergence rates:
 % complexity analysis for self concordant functions. quad, lin. problems special case of s c fct.
@@ -184,7 +184,7 @@ Since there are exactly \[ \ceil*{ \frac{\log(m/\epsilon t_0)}{\log \mu}} \] out
 
 
 \subsubsection{Primal-Dual Interior Point Method}
-Like the previously introduced algorithm, the Primal-Dual Interior Point method uses the barrier concept to handle inequality constraints. It is motivated by the following idea: Since the points generated by each outer iteration converge to the desired optimum on the central path, one does not gain much advantage by computing the central points with a high level of accuracy. This results in many newton-steps being computed, without improving the convergence towards the optimum value of \eqref{eq:OptProblem}. Hence, it would be useful to reduce the accuracy of each outer iteration as much as possible, without losing convergence to the optimum. Therefore, in this method only one newton step will be computed for each parameter $ t $ in the approximated problem  \eqref{eq:ApproxProblem}. Furthermore, this Newton step is computed differently. While in the barrier method with full newton search,  the search directions are computed only considering the primal problem, the \pdm also takes the dual problem of \eqref{eq:ApproxProblem} into account. In particular Newton's method is applied to a system of residual terms, which all have to equal zero by the modified KKT-conditons, here presented like in \cite{BV}.\\
+Like the previously introduced algorithm, the Primal-Dual Interior Point method uses the barrier concept to handle inequality constraints. It is motivated by the following idea: Since the points generated by each outer iteration converge to the desired optimum on the central path, one does not gain much advantage by computing each central point with a high level of accuracy. This results in many newton-steps being computed, without improving the convergence towards the optimum value of \eqref{eq:OptProblem}. Hence, it would be useful to reduce the accuracy of each outer iteration as much as possible, without losing convergence to the optimum. Therefore, in this method only one newton step will be computed for each parameter $ t $ in the approximated problem  \eqref{eq:ApproxProblem}. Furthermore, this Newton step is computed differently. While in the barrier method with full newton search,  the search directions are computed only considering the primal problem, the \pdm \ also takes the dual problem of \eqref{eq:ApproxProblem} into account. In particular Newton's method is applied to a system of residual terms, which all have to equal zero by the modified KKT-conditons, here presented like in \cite{BV}.\\
 \begin{theorem}[Modified KKT-Conditions]
 	For a convex Optimization Problem with a logarithmic barrier function \eqref{eq:ApproxProblem}, the following conditions on a primal-dual point $ (x,\lambda,\nu) \in \Rn \times \Rm \times \Rp$ are neccessary and sufficient for $ x $ being a solution to the primal problem and $ (\lambda, \nu) $ being a solution to the dual problem:
 	\begin{subequations}
@@ -296,16 +296,16 @@ Finally, we can present the entire algortithm of the \pdm.
  
  Especially when results with high accuracy are needed, the \pdm \ allows to omit a lot of newton steps, that would be have computed in the Barrier Method. For such problems, the \pdm \ provides better performance.
  \begin{remark}
- 	The concept of using a barrier method to approximate inequality constraints can also be used for solving optimization problems involving generalized inequalities. Therefore, the barrier function and constraints on the dual problem have to be adjusted. Doing this, the class of problems that apply the usage of barrier methods is widely enlarged. For example it can be used for solving linear matrix inequalities or single order cone problems.
+ 	The concept of using a barrier method to approximate inequality constraints can also be used for solving optimization problems involving generalized inequalities. Therefore, the barrier function and constraints on the dual problem have to be adjusted. By doing this, the class of problems that apply the usage of barrier methods is widely enlarged. For example it can be used for solving linear matrix inequalities.
  \end{remark}
  
- Further, a higher speed of convergence can be shown for the application on some special classes of problems, such as quadratic problems or single order cone problems (SOCPs). Here the \pdm can perform faster  than with linear convergence.
+ Further, a higher speed of convergence can be shown for the application on some special classes of problems, such as quadratic problems or single order cone problems (SOCPs). Here the \pdm can perform faster  than with linear convergence (\cite{BV}).
  
  
  
 \subsection{How to find a feasible inital point}
 The Algorithms \ref{alg:BarrierFullNewton} and \ref{alg:pdip} both need a strictly feasible initial point to start. Since such a point is in general not trivial to find, one can formulate the search for the initial point as another convex optimization problem, that is easier to solve than the original one.  
-For problem \eqref{eq:OptProblem}, one way to implement this, is solving
+For problem \eqref{eq:OptProblem}, one way to implement this, is to solve
 \begin{equation}
 	\OptProblemfeas
 	\label{eq:feasProblem}

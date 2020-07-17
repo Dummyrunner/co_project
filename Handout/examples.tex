@@ -2,7 +2,7 @@ We give an implementation of the \pdm \ (Algorithm \ref{alg:pdip}) in \matlab, a
 
 \subsection{Numerical Examples}
 \subsubsection{Example 1}
-The effectivity of the algorithm can be demonstrated with the following explicit example of \eqref{eq:OptProblem}. For the problem defined by
+The effectivity of the algorithm can be demonstrated with the following explicit example of \eqref{eq:QuadProblem}. For the problem defined by
 \begin{gather*}
 	Q = 2\cdot \begin{pmatrix}
 	1 & 0\\ 0 & 2
@@ -14,7 +14,7 @@ The effectivity of the algorithm can be demonstrated with the following explicit
 0 & 1
 \end{pmatrix}; \quad \beq= 10,
 \end{gather*}
-we choose backtracking parameters $ \alpha 0.05,\beta = 0.5 $ as well as $ \gamma = 0.1 $ for the reduction of the approximation parameter. Initial points are set to $ \xnull = (1,1)\trp, \lambda_0 = 1, \nu_0 = 0 $ and tolerances to $ \epsfeas = \epsopt = 10^{-4} $.\\
+we choose backtracking parameters $ \alpha= 0.05,\beta = 0.5 $ as well as $ \gamma = 0.1 $ for the reduction of the approximation parameter. Initial points are set to $ \xnull = (1,1)\trp, \lambda_0 = 1, \nu_0 = 0 $ and tolerances to $ \epsfeas = \epsopt = 10^{-4} $.\\
 
 With this setup, the solver terminates after 20 iterations and yields the following results:
 \begin{align*}
