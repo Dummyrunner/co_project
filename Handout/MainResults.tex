@@ -258,6 +258,10 @@ The detailed procedure of the backtracking linesearch is displayed in Algorithm 
 		\label{alg:backtracking}
 \end{algorithm}
 
+
+The iterates we obtain by \pdm  can not be guaranteed to satisfy the equality constraints. Hence suboptimality can not be measured via the duality gap.
+We therefore use the surrogate dualiy gap \[ \etahat(x,\lambda) = -\fx\trp \lambda. \]
+ 
 Finally, we can present the entire algortithm of the \pdm.
 
 \begin{algorithm}
